@@ -1,4 +1,3 @@
-```javascript
 import { useState } from "react";
 import { jobs } from "../data/jobs";
 
@@ -12,12 +11,13 @@ export default function Home() {
   ];
 
   const filteredJobs = jobs.filter((job) => {
-    const searchText = search.toLowerCase();
+    const text = search.toLowerCase();
 
     const matchesSearch =
-      job.title.toLowerCase().includes(searchText) ||
-      job.qualification.toLowerCase().includes(searchText) ||
-      job.category.toLowerCase().includes(searchText);
+      job.title.toLowerCase().includes(text) ||
+      job.organization.toLowerCase().includes(text) ||
+      job.qualification.toLowerCase().includes(text) ||
+      job.category.toLowerCase().includes(text);
 
     const matchesCategory =
       category === "All" || job.category === category;
@@ -30,7 +30,7 @@ export default function Home() {
 
       <div className="header">
         <h1>🔥 Latest Govt Jobs 2026</h1>
-        <p>Find the latest government job opportunities</p>
+        <p>Find Government Jobs Across India</p>
       </div>
 
       <div className="filters">
@@ -69,27 +69,43 @@ export default function Home() {
             <h2>{job.title}</h2>
 
             <p>
-              <b>Category:</b> {job.category}
+              <b>🏢 Organization:</b> {job.organization}
             </p>
 
             <p>
-              <b>Posts:</b> {job.posts}
+              <b>📂 Category:</b> {job.category}
             </p>
 
             <p>
-              <b>Qualification:</b> {job.qualification}
+              <b>👥 Posts:</b> {job.posts}
             </p>
 
             <p>
-              <b>Last Date:</b> {job.lastDate}
+              <b>🎓 Qualification:</b> {job.qualification}
             </p>
 
             <p>
-              <b>Salary:</b> {job.salary}
+              <b>🎂 Age Limit:</b> {job.ageLimit}
             </p>
 
             <p>
-              <b>Status:</b>{" "}
+              <b>📍 Location:</b> {job.location}
+            </p>
+
+            <p>
+              <b>💼 Job Type:</b> {job.jobType}
+            </p>
+
+            <p>
+              <b>💰 Salary:</b> {job.salary}
+            </p>
+
+            <p>
+              <b>📅 Last Date:</b> {job.lastDate}
+            </p>
+
+            <p>
+              <b>📌 Status:</b>{" "}
               <span
                 className={
                   job.status === "Open" ? "open" : "closed"
@@ -99,7 +115,7 @@ export default function Home() {
               </span>
             </p>
 
-            {job.status === "Open" ? (
+            <div>
               <a
                 className="apply-button"
                 href={job.applyLink}
@@ -108,11 +124,16 @@ export default function Home() {
               >
                 Apply Now →
               </a>
-            ) : (
-              <span className="closed-button">
-                Applications Closed
-              </span>
-            )}
+
+              <a
+                className="apply-button"
+                href={job.notificationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Notification →
+              </a>
+            </div>
 
           </div>
         ))
@@ -124,5 +145,4 @@ export default function Home() {
 
     </div>
   );
-}
-```
+            }
