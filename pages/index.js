@@ -138,9 +138,15 @@ export default function Home() {
         ))
       )}
 
-      <footer>
-        © 2026 Govt Jobs 2026. All Rights Reserved.
-      </footer>
+        <footer>
+  <p>© 2026 Govt Jobs 2026. All Rights Reserved.</p>
+
+  <div className="footer-links">
+    <a href="/privacy-policy">Privacy Policy</a>
+    <a href="/disclaimer">Disclaimer</a>
+    <a href="/terms">Terms & Conditions</a>
+  </div>
+</footer>
 
     </div>
   );
