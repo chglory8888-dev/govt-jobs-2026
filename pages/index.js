@@ -1,3 +1,4 @@
+```javascript
 import { useState } from "react";
 import { jobs } from "../data/jobs";
 
@@ -11,9 +12,12 @@ export default function Home() {
   ];
 
   const filteredJobs = jobs.filter((job) => {
+    const searchText = search.toLowerCase();
+
     const matchesSearch =
-      job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.qualification.toLowerCase().includes(search.toLowerCase());
+      job.title.toLowerCase().includes(searchText) ||
+      job.qualification.toLowerCase().includes(searchText) ||
+      job.category.toLowerCase().includes(searchText);
 
     const matchesCategory =
       category === "All" || job.category === category;
@@ -23,7 +27,11 @@ export default function Home() {
 
   return (
     <div className="container">
-      <h1>🔥 Latest Govt Jobs 2026</h1>
+
+      <div className="header">
+        <h1>🔥 Latest Govt Jobs 2026</h1>
+        <p>Find the latest government job opportunities</p>
+      </div>
 
       <div className="filters">
         <input
@@ -45,8 +53,8 @@ export default function Home() {
         </select>
       </div>
 
-      <p className="job-count">
-        Showing {filteredJobs.length} job(s)
+      <p>
+        <b>Showing {filteredJobs.length} job(s)</b>
       </p>
 
       {filteredJobs.length === 0 ? (
@@ -57,6 +65,7 @@ export default function Home() {
       ) : (
         filteredJobs.map((job) => (
           <div key={job.id} className="job-card">
+
             <h2>{job.title}</h2>
 
             <p>
@@ -81,21 +90,39 @@ export default function Home() {
 
             <p>
               <b>Status:</b>{" "}
-              <span className={job.status === "Open" ? "open" : "closed"}>
+              <span
+                className={
+                  job.status === "Open" ? "open" : "closed"
+                }
+              >
                 {job.status}
               </span>
             </p>
 
-            <a
-              href={job.applyLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Apply Now →
-            </a>
+            {job.status === "Open" ? (
+              <a
+                className="apply-button"
+                href={job.applyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Apply Now →
+              </a>
+            ) : (
+              <span className="closed-button">
+                Applications Closed
+              </span>
+            )}
+
           </div>
         ))
       )}
+
+      <footer>
+        © 2026 Govt Jobs 2026. All Rights Reserved.
+      </footer>
+
     </div>
   );
-        }
+}
+```
