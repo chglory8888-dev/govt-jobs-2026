@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import { jobs } from "../data/jobs";
 
 export default function Home() {
@@ -116,6 +117,13 @@ export default function Home() {
             </p>
 
             <div>
+              <Link
+                href={`/jobs/${job.id}`}
+                className="apply-button"
+              >
+                View Details →
+              </Link>
+
               <a
                 className="apply-button"
                 href={job.applyLink}
@@ -123,15 +131,6 @@ export default function Home() {
                 rel="noopener noreferrer"
               >
                 Apply Now →
-              </a>
-
-              <a
-                className="apply-button"
-                href={job.notificationLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Notification →
               </a>
             </div>
 
@@ -145,4 +144,4 @@ export default function Home() {
 
     </div>
   );
-            }
+        }
