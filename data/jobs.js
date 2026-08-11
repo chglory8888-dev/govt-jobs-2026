@@ -1,15 +1,18 @@
-```javascript
 export const jobs = [
   {
     id: 1,
-    title: "SSC CGL 2026 Recruitment",
+    title: "SSC CGL Recruitment 2026",
+    organization: "Staff Selection Commission",
     category: "SSC",
-    posts: "12256",
+    posts: "To be updated",
     qualification: "Graduation",
-    lastDate: "2026-09-15",
+    ageLimit: "Check official notification",
+    location: "All India",
+    jobType: "Central Government",
+    salary: "As per official notification",
+    lastDate: "Check official notification",
     applyLink: "https://ssc.gov.in",
-    salary: "₹50,000 – ₹1,51,100",
-    status: "Open"
+    notificationLink: "https://ssc.gov.in",
+    status: "Check"
   }
 ];
-```
