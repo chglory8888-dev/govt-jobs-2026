@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import { jobs } from "../data/jobs";
 
@@ -33,22 +34,34 @@ export default function Home() {
 
         <meta
           name="description"
-          content="Find latest government jobs, SSC, Banking, Railway, PSU, Defence and Central Government job notifications in India."
+          content="Find the latest Government Jobs 2026 in India including Banking, Central Government, Railway, SSC, Defence, PSU and Healthcare job notifications."
+        />
+
+        <meta
+          name="keywords"
+          content="Govt Jobs 2026, Government Jobs 2026, Central Government Jobs, Banking Jobs, Railway Jobs, SSC Jobs, Defence Jobs, PSU Jobs, Healthcare Jobs"
         />
 
         <meta
           name="google-site-verification"
           content="dIBVdX3k2APZaWxk8hlGB7ykx_gDwHzGQXNtoswegjk"
         />
+
+        <link
+          rel="canonical"
+          href="https://govt-jobs-2026-8m3h.vercel.app/"
+        />
       </Head>
 
       <div className="container">
 
+        {/* HEADER */}
         <div className="header">
           <h1>🔥 Latest Govt Jobs 2026</h1>
           <p>Find Government Jobs Across India</p>
         </div>
 
+        {/* SEARCH AND FILTER */}
         <div className="filters">
 
           <input
@@ -71,10 +84,51 @@ export default function Home() {
 
         </div>
 
+        {/* CATEGORY SEO LINKS */}
+        <div className="category-links">
+
+          <h2>Explore Government Jobs by Category</h2>
+
+          <div className="category-grid">
+
+            <Link href="/banking">
+              🏦 Banking Jobs 2026
+            </Link>
+
+            <Link href="/central-government">
+              🏛️ Central Government Jobs 2026
+            </Link>
+
+            <Link href="/railway">
+              🚆 Railway Jobs 2026
+            </Link>
+
+            <Link href="/ssc">
+              📋 SSC Jobs 2026
+            </Link>
+
+            <Link href="/defence">
+              🛡️ Defence Jobs 2026
+            </Link>
+
+            <Link href="/psu">
+              🏢 PSU Jobs 2026
+            </Link>
+
+            <Link href="/healthcare">
+              🏥 Healthcare Jobs 2026
+            </Link>
+
+          </div>
+
+        </div>
+
+        {/* JOB COUNT */}
         <p className="job-count">
           Showing {filteredJobs.length} job(s)
         </p>
 
+        {/* JOB LIST */}
         {filteredJobs.length === 0 ? (
 
           <div className="no-jobs">
@@ -169,6 +223,7 @@ export default function Home() {
 
         )}
 
+        {/* FOOTER */}
         <footer>
 
           <p>
@@ -177,17 +232,17 @@ export default function Home() {
 
           <div className="footer-links">
 
-            <a href="/privacy-policy">
+            <Link href="/privacy-policy">
               Privacy Policy
-            </a>
+            </Link>
 
-            <a href="/disclaimer">
+            <Link href="/disclaimer">
               Disclaimer
-            </a>
+            </Link>
 
-            <a href="/terms">
+            <Link href="/terms">
               Terms & Conditions
-            </a>
+            </Link>
 
           </div>
 
@@ -196,4 +251,4 @@ export default function Home() {
       </div>
     </>
   );
-}
+        }
