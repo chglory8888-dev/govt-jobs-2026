@@ -30,7 +30,9 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Govt Jobs 2026 | Latest Government Jobs in India</title>
+        <title>
+          Govt Jobs 2026 | Latest Government Jobs in India
+        </title>
 
         <meta
           name="description"
@@ -50,6 +52,34 @@ export default function Home() {
         <link
           rel="canonical"
           href="https://govt-jobs-2026-8m3h.vercel.app/"
+        />
+
+        {/* Website Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Govt Jobs 2026",
+              url: "https://govt-jobs-2026-8m3h.vercel.app/",
+              description:
+                "Latest Government Jobs 2026 in India including Banking, Central Government, Railway, SSC, Defence, PSU and Healthcare jobs.",
+            }),
+          }}
+        />
+
+        {/* Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Govt Jobs 2026",
+              url: "https://govt-jobs-2026-8m3h.vercel.app/",
+            }),
+          }}
         />
       </Head>
 
@@ -84,7 +114,7 @@ export default function Home() {
 
         </div>
 
-        {/* CATEGORY SEO LINKS */}
+        {/* CATEGORY LINKS */}
         <div className="category-links">
 
           <h2>Explore Government Jobs by Category</h2>
@@ -133,55 +163,70 @@ export default function Home() {
 
           <div className="no-jobs">
             <h2>😔 No Jobs Found</h2>
-            <p>Try another search or category.</p>
+            <p>
+              Try another search or category.
+            </p>
           </div>
 
         ) : (
 
           filteredJobs.map((job) => (
 
-            <div key={job.id} className="job-card">
+            <div
+              key={job.id}
+              className="job-card"
+            >
 
               <h2>{job.title}</h2>
 
               <p>
-                🏢 <b>Organization:</b> {job.organization}
+                🏢 <b>Organization:</b>{" "}
+                {job.organization}
               </p>
 
               <p>
-                📂 <b>Category:</b> {job.category}
+                📂 <b>Category:</b>{" "}
+                {job.category}
               </p>
 
               <p>
-                👥 <b>Posts:</b> {job.posts}
+                👥 <b>Posts:</b>{" "}
+                {job.posts}
               </p>
 
               <p>
-                🎓 <b>Qualification:</b> {job.qualification}
+                🎓 <b>Qualification:</b>{" "}
+                {job.qualification}
               </p>
 
               <p>
-                🎂 <b>Age Limit:</b> {job.ageLimit}
+                🎂 <b>Age Limit:</b>{" "}
+                {job.ageLimit}
               </p>
 
               <p>
-                📍 <b>Location:</b> {job.location}
+                📍 <b>Location:</b>{" "}
+                {job.location}
               </p>
 
               <p>
-                💼 <b>Job Type:</b> {job.jobType}
+                💼 <b>Job Type:</b>{" "}
+                {job.jobType}
               </p>
 
               <p>
-                💰 <b>Salary:</b> {job.salary}
+                💰 <b>Salary:</b>{" "}
+                {job.salary}
               </p>
 
               <p>
-                📅 <b>Last Date:</b> {job.lastDate}
+                📅 <b>Last Date:</b>{" "}
+                {job.lastDate}
               </p>
 
               <p>
                 📌 <b>Status:</b>{" "}
+
                 <span
                   className={
                     job.status === "Open"
@@ -227,7 +272,8 @@ export default function Home() {
         <footer>
 
           <p>
-            © 2026 Govt Jobs 2026. All Rights Reserved.
+            © 2026 Govt Jobs 2026.
+            All Rights Reserved.
           </p>
 
           <div className="footer-links">
@@ -251,4 +297,4 @@ export default function Home() {
       </div>
     </>
   );
-        }
+}
