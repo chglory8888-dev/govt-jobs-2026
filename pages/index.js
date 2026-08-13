@@ -6,26 +6,126 @@ import { jobs } from "../data/jobs";
 export default function Home() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [status, setStatus] = useState("All");
+  const [sortBy, setSortBy] = useState("Latest");
 
   const categories = [
     "All",
     ...new Set(jobs.map((job) => job.category)),
   ];
 
-  const filteredJobs = jobs.filter((job) => {
-    const searchText = search.toLowerCase();
+  const statuses = ["All", "Open", "Closing Soon", "Closed"];
 
-    const matchesSearch =
-      job.title.toLowerCase().includes(searchText) ||
-      job.organization.toLowerCase().includes(searchText) ||
-      job.qualification.toLowerCase().includes(searchText) ||
-      job.category.toLowerCase().includes(searchText);
+  // Convert date safely for sorting
+  const getDateValue = (date) => {
+    if (!date) return 0;
 
-    const matchesCategory =
-      category === "All" || job.category === category;
+    const parsedDate = new Date(date);
 
-    return matchesSearch && matchesCategory;
-  });
+    if (!isNaN(parsedDate.getTime())) {
+      return parsedDate.getTime();
+    }
+
+    // Try DD-MM-YYYY / DD/MM/YYYY
+    const parts = date.split(/[-/]/);
+
+    if (parts.length === 3) {
+      const day = parseInt(parts[0]);
+      const month = parseInt(parts[1]) - 1;
+      const year = parseInt(parts[2]);
+
+      if (
+        !isNaN(day) &&
+        !isNaN(month) &&
+        !isNaN(year)
+      ) {
+        return new Date(year, month, day).getTime();
+      }
+    }
+
+    return 0;
+  };
+
+  const getDaysLeft = (date) => {
+    if (!date) return null;
+
+    const dateValue = getDateValue(date);
+
+    if (!dateValue) return null;
+
+    const today = new Date();
+    const deadline = new Date(dateValue);
+
+    today.setHours(0, 0, 0, 0);
+    deadline.setHours(0, 0, 0, 0);
+
+    const difference =
+      deadline.getTime() - today.getTime();
+
+    return Math.ceil(
+      difference / (1000 * 60 * 60 * 24)
+    );
+  };
+
+  const getJobStatus = (job) => {
+    const daysLeft = getDaysLeft(job.lastDate);
+
+    if (daysLeft === null) {
+      return job.status || "Open";
+    }
+
+    if (daysLeft < 0) {
+      return "Closed";
+    }
+
+    if (daysLeft <= 7) {
+      return "Closing Soon";
+    }
+
+    return "Open";
+  };
+
+  const filteredJobs = jobs
+    .filter((job) => {
+      const searchText = search.toLowerCase().trim();
+
+      const matchesSearch =
+        job.title?.toLowerCase().includes(searchText) ||
+        job.organization?.toLowerCase().includes(searchText) ||
+        job.qualification?.toLowerCase().includes(searchText) ||
+        job.category?.toLowerCase().includes(searchText) ||
+        job.location?.toLowerCase().includes(searchText);
+
+      const matchesCategory =
+        category === "All" ||
+        job.category === category;
+
+      const currentStatus = getJobStatus(job);
+
+      const matchesStatus =
+        status === "All" ||
+        currentStatus === status;
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesStatus
+      );
+    })
+    .sort((a, b) => {
+      const dateA = getDateValue(a.lastDate);
+      const dateB = getDateValue(b.lastDate);
+
+      if (sortBy === "Latest") {
+        return dateB - dateA;
+      }
+
+      if (sortBy === "Deadline") {
+        return dateA - dateB;
+      }
+
+      return 0;
+    });
 
   return (
     <>
@@ -88,28 +188,72 @@ export default function Home() {
         {/* HEADER */}
         <div className="header">
           <h1>🔥 Latest Govt Jobs 2026</h1>
-          <p>Find Government Jobs Across India</p>
+
+          <p>
+            Find Government Jobs Across India
+          </p>
         </div>
 
-        {/* SEARCH AND FILTER */}
+        {/* SEARCH */}
         <div className="filters">
 
           <input
             type="text"
-            placeholder="🔎 Search jobs..."
+            placeholder="🔎 Search jobs, organization, qualification..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
           />
 
+          {/* CATEGORY */}
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
           >
             {categories.map((cat) => (
-              <option key={cat} value={cat}>
+              <option
+                key={cat}
+                value={cat}
+              >
                 {cat}
               </option>
             ))}
+          </select>
+
+          {/* STATUS */}
+          <select
+            value={status}
+            onChange={(e) =>
+              setStatus(e.target.value)
+            }
+          >
+            {statuses.map((item) => (
+              <option
+                key={item}
+                value={item}
+              >
+                {item}
+              </option>
+            ))}
+          </select>
+
+          {/* SORT */}
+          <select
+            value={sortBy}
+            onChange={(e) =>
+              setSortBy(e.target.value)
+            }
+          >
+            <option value="Latest">
+              Latest Jobs
+            </option>
+
+            <option value="Deadline">
+              Closing Soon
+            </option>
           </select>
 
         </div>
@@ -117,7 +261,9 @@ export default function Home() {
         {/* CATEGORY LINKS */}
         <div className="category-links">
 
-          <h2>Explore Government Jobs by Category</h2>
+          <h2>
+            Explore Government Jobs by Category
+          </h2>
 
           <div className="category-grid">
 
@@ -150,121 +296,186 @@ export default function Home() {
             </Link>
 
           </div>
-
         </div>
 
         {/* JOB COUNT */}
         <p className="job-count">
-          Showing {filteredJobs.length} job(s)
+          Showing{" "}
+          <b>{filteredJobs.length}</b>{" "}
+          job(s)
         </p>
 
         {/* JOB LIST */}
         {filteredJobs.length === 0 ? (
 
           <div className="no-jobs">
-            <h2>😔 No Jobs Found</h2>
+
+            <h2>
+              😔 No Jobs Found
+            </h2>
+
             <p>
-              Try another search or category.
+              Try another search, category,
+              or status.
             </p>
+
           </div>
 
         ) : (
 
-          filteredJobs.map((job) => (
+          filteredJobs.map((job) => {
 
-            <div
-              key={job.id}
-              className="job-card"
-            >
+            const currentStatus =
+              getJobStatus(job);
 
-              <h2>{job.title}</h2>
+            const daysLeft =
+              getDaysLeft(job.lastDate);
 
-              <p>
-                🏢 <b>Organization:</b>{" "}
-                {job.organization}
-              </p>
+            return (
 
-              <p>
-                📂 <b>Category:</b>{" "}
-                {job.category}
-              </p>
+              <div
+                key={job.id}
+                className="job-card"
+              >
 
-              <p>
-                👥 <b>Posts:</b>{" "}
-                {job.posts}
-              </p>
+                {/* NEW / CLOSING BADGE */}
+                {daysLeft !== null &&
+                  daysLeft >= 0 &&
+                  daysLeft <= 7 && (
 
-              <p>
-                🎓 <b>Qualification:</b>{" "}
-                {job.qualification}
-              </p>
+                    <div className="closing-badge">
+                      🔥 Closing Soon
+                    </div>
 
-              <p>
-                🎂 <b>Age Limit:</b>{" "}
-                {job.ageLimit}
-              </p>
+                  )}
 
-              <p>
-                📍 <b>Location:</b>{" "}
-                {job.location}
-              </p>
+                {daysLeft !== null &&
+                  daysLeft > 7 && (
 
-              <p>
-                💼 <b>Job Type:</b>{" "}
-                {job.jobType}
-              </p>
+                    <div className="new-badge">
+                      🆕 Latest Job
+                    </div>
 
-              <p>
-                💰 <b>Salary:</b>{" "}
-                {job.salary}
-              </p>
+                  )}
 
-              <p>
-                📅 <b>Last Date:</b>{" "}
-                {job.lastDate}
-              </p>
+                <h2>
+                  {job.title}
+                </h2>
 
-              <p>
-                📌 <b>Status:</b>{" "}
+                <p>
+                  🏢 <b>Organization:</b>{" "}
+                  {job.organization}
+                </p>
 
-                <span
-                  className={
-                    job.status === "Open"
-                      ? "open"
-                      : job.status === "Closed"
-                      ? "closed"
-                      : "check"
-                  }
-                >
-                  {job.status}
-                </span>
-              </p>
+                <p>
+                  📂 <b>Category:</b>{" "}
+                  {job.category}
+                </p>
 
-              <div className="job-buttons">
+                <p>
+                  👥 <b>Posts:</b>{" "}
+                  {job.posts}
+                </p>
 
-                <a
-                  href={job.notificationLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="apply-button"
-                >
-                  View Notification →
-                </a>
+                <p>
+                  🎓 <b>Qualification:</b>{" "}
+                  {job.qualification}
+                </p>
 
-                <a
-                  href={job.applyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="apply-button"
-                >
-                  Apply Now →
-                </a>
+                <p>
+                  🎂 <b>Age Limit:</b>{" "}
+                  {job.ageLimit}
+                </p>
+
+                <p>
+                  📍 <b>Location:</b>{" "}
+                  {job.location}
+                </p>
+
+                <p>
+                  💼 <b>Job Type:</b>{" "}
+                  {job.jobType}
+                </p>
+
+                <p>
+                  💰 <b>Salary:</b>{" "}
+                  {job.salary}
+                </p>
+
+                <p>
+                  📅 <b>Last Date:</b>{" "}
+                  {job.lastDate}
+                </p>
+
+                {/* DAYS LEFT */}
+                {daysLeft !== null && (
+                  <p>
+                    ⏳ <b>Days Left:</b>{" "}
+
+                    {daysLeft < 0 ? (
+                      <span className="closed">
+                        Application Closed
+                      </span>
+                    ) : daysLeft === 0 ? (
+                      <span className="closing">
+                        Last Date Today!
+                      </span>
+                    ) : daysLeft === 1 ? (
+                      <span className="closing">
+                        1 Day Left!
+                      </span>
+                    ) : (
+                      <span className="days-left">
+                        {daysLeft} Days Left
+                      </span>
+                    )}
+                  </p>
+                )}
+
+                {/* STATUS */}
+                <p>
+                  📌 <b>Status:</b>{" "}
+
+                  <span
+                    className={
+                      currentStatus === "Open"
+                        ? "open"
+                        : currentStatus === "Closed"
+                        ? "closed"
+                        : "check"
+                    }
+                  >
+                    {currentStatus}
+                  </span>
+                </p>
+
+                {/* BUTTONS */}
+                <div className="job-buttons">
+
+                  <a
+                    href={job.notificationLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="apply-button"
+                  >
+                    View Notification →
+                  </a>
+
+                  <a
+                    href={job.applyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="apply-button"
+                  >
+                    Apply Now →
+                  </a>
+
+                </div>
 
               </div>
 
-            </div>
-
-          ))
+            );
+          })
 
         )}
 
@@ -297,4 +508,4 @@ export default function Home() {
       </div>
     </>
   );
-}
+            }
