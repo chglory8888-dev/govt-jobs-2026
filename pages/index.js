@@ -48,14 +48,41 @@ export default function Home() {
   };
 
   const getStatus = (job) => {
-    const days = getDaysLeft(job.lastDate);
+  const days = getDaysLeft(job.lastDate);
 
-    if (days === null) return job.status || "Open";
-    if (days < 0) return "Closed";
-    if (days <= 7) return "Closing Soon";
+  if (job.status) {
+    const savedStatus = String(job.status).toLowerCase();
 
-    return "Open";
-  };
+    if (savedStatus === "closed") {
+      return "Closed";
+    }
+
+    if (
+      savedStatus === "closing soon" ||
+      savedStatus === "closing"
+    ) {
+      return "Closing Soon";
+    }
+
+    if (savedStatus === "open") {
+      return "Open";
+    }
+  }
+
+  if (days === null) {
+    return "Check";
+  }
+
+  if (days < 0) {
+    return "Closed";
+  }
+
+  if (days <= 7) {
+    return "Closing Soon";
+  }
+
+  return "Open";
+};
 
   const filteredJobs = [...jobs]
     .filter((job) => {
@@ -260,6 +287,9 @@ export default function Home() {
                 🔴 Closed
               </option>
             </select>
+                <option value="Check">
+  🔵 Check Notification
+</option>
 
             <select
               value={sortBy}
@@ -288,7 +318,10 @@ export default function Home() {
 
         </section>
 
-        <section className="category-links">
+        <section
+  className="category-links"
+  id="categories"
+>
 
           <h2>
             Explore Government Jobs by Category
@@ -361,7 +394,10 @@ export default function Home() {
 
           </div>
         ) : (
-          <div className="jobs-list">
+          <div
+  className="jobs-list"
+  id="jobs"
+>
                       {filteredJobs.map((job) => {
               const jobStatus = getStatus(job);
               const daysLeft = getDaysLeft(job.lastDate);
@@ -584,7 +620,7 @@ export default function Home() {
             All Rights Reserved.
           </p>
 
-        </footer>
+        <footer id="contact">
 
       </main>
     </>
