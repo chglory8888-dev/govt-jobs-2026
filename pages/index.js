@@ -9,16 +9,29 @@ export default function Home() {
   const [status, setStatus] = useState("All");
   const [sortBy, setSortBy] = useState("Latest");
 
+  // ==============================
+  // CATEGORIES
+  // ==============================
+
   const categories = [
     "All",
-    ...new Set(jobs.map((job) => job.category).filter(Boolean)),
+    ...new Set(
+      jobs
+        .map((job) => job.category)
+        .filter(Boolean)
+    ),
   ];
 
-  const statuses = ["All", "Open", "Closing Soon", "Closed"];
+  const statuses = [
+    "All",
+    "Open",
+    "Closing Soon",
+    "Closed",
+  ];
 
-  // --------------------------------
-  // DATE HELPERS
-  // --------------------------------
+  // ==============================
+  // DATE FUNCTION
+  // ==============================
 
   const getDateValue = (date) => {
     if (!date) return 0;
@@ -27,31 +40,42 @@ export default function Home() {
       return date.getTime();
     }
 
-    const parsedDate = new Date(date);
-
-    if (!isNaN(parsedDate.getTime())) {
-      return parsedDate.getTime();
-    }
+    const dateString = String(date).trim();
 
     // DD-MM-YYYY / DD/MM/YYYY
-    const parts = String(date).split(/[-/]/);
+    const parts = dateString.split(/[-/]/);
 
     if (parts.length === 3) {
-      const day = parseInt(parts[0]);
-      const month = parseInt(parts[1]) - 1;
-      const year = parseInt(parts[2]);
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10);
+      const year = parseInt(parts[2], 10);
 
       if (
-        !isNaN(day) &&
-        !isNaN(month) &&
-        !isNaN(year)
+        !Number.isNaN(day) &&
+        !Number.isNaN(month) &&
+        !Number.isNaN(year)
       ) {
-        return new Date(year, month, day).getTime();
+        return new Date(
+          year,
+          month - 1,
+          day
+        ).getTime();
       }
+    }
+
+    // YYYY-MM-DD
+    const parsedDate = new Date(dateString);
+
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return parsedDate.getTime();
     }
 
     return 0;
   };
+
+  // ==============================
+  // DAYS LEFT
+  // ==============================
 
   const getDaysLeft = (date) => {
     if (!date) return null;
@@ -70,12 +94,19 @@ export default function Home() {
       deadline.getTime() - today.getTime();
 
     return Math.ceil(
-      difference / (1000 * 60 * 60 * 24)
+      difference /
+        (1000 * 60 * 60 * 24)
     );
   };
 
+  // ==============================
+  // JOB STATUS
+  // ==============================
+
   const getJobStatus = (job) => {
-    const daysLeft = getDaysLeft(job.lastDate);
+    const daysLeft = getDaysLeft(
+      job.lastDate
+    );
 
     if (daysLeft === null) {
       return job.status || "Open";
@@ -92,15 +123,17 @@ export default function Home() {
     return "Open";
   };
 
-  // --------------------------------
-  // FILTER + SORT
-  // --------------------------------
+  // ==============================
+  // FILTER + SEARCH + SORT
+  // ==============================
 
   const filteredJobs = useMemo(() => {
-    return jobs
-      .filter((job) => {
-        const searchText = search.toLowerCase().trim();
+    const searchText = search
+      .toLowerCase()
+      .trim();
 
+    return [...jobs]
+      .filter((job) => {
         if (!searchText) {
           return true;
         }
@@ -114,33 +147,39 @@ export default function Home() {
           job.jobType,
           job.posts,
           job.salary,
+          job.ageLimit,
         ]
           .filter(Boolean)
           .join(" ")
           .toLowerCase();
 
-        return searchableText.includes(searchText);
+        return searchableText.includes(
+          searchText
+        );
       })
-
       .filter((job) => {
         return (
           category === "All" ||
           job.category === category
         );
       })
-
       .filter((job) => {
-        const currentStatus = getJobStatus(job);
+        const currentStatus =
+          getJobStatus(job);
 
         return (
           status === "All" ||
           currentStatus === status
         );
       })
-
       .sort((a, b) => {
-        const dateA = getDateValue(a.lastDate);
-        const dateB = getDateValue(b.lastDate);
+        const dateA = getDateValue(
+          a.lastDate
+        );
+
+        const dateB = getDateValue(
+          b.lastDate
+        );
 
         if (sortBy === "Latest") {
           return dateB - dateA;
@@ -152,11 +191,16 @@ export default function Home() {
 
         return 0;
       });
-  }, [search, category, status, sortBy]);
+  }, [
+    search,
+    category,
+    status,
+    sortBy,
+  ]);
 
-  // --------------------------------
-  // RESET FILTERS
-  // --------------------------------
+  // ==============================
+  // RESET
+  // ==============================
 
   const resetFilters = () => {
     setSearch("");
@@ -165,22 +209,26 @@ export default function Home() {
     setSortBy("Latest");
   };
 
-  // --------------------------------
+  // ==============================
   // STATISTICS
-  // --------------------------------
+  // ==============================
 
   const totalJobs = jobs.length;
 
   const openJobs = jobs.filter(
-    (job) => getJobStatus(job) === "Open"
+    (job) =>
+      getJobStatus(job) === "Open"
   ).length;
 
   const closingJobs = jobs.filter(
-    (job) => getJobStatus(job) === "Closing Soon"
+    (job) =>
+      getJobStatus(job) ===
+      "Closing Soon"
   ).length;
 
   const closedJobs = jobs.filter(
-    (job) => getJobStatus(job) === "Closed"
+    (job) =>
+      getJobStatus(job) === "Closed"
   ).length;
 
   return (
@@ -220,7 +268,8 @@ export default function Home() {
           href="https://govt-jobs-2026-8m3h.vercel.app/"
         />
 
-        {/* Open Graph */}
+        {/* OPEN GRAPH */}
+
         <meta
           property="og:title"
           content="Govt Jobs 2026 | Latest Government Jobs in India"
@@ -241,17 +290,20 @@ export default function Home() {
           content="https://govt-jobs-2026-8m3h.vercel.app/"
         />
 
-        {/* Website Schema */}
+        {/* WEBSITE SCHEMA */}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
+              "@context":
+                "https://schema.org",
               "@type": "WebSite",
               name: "Govt Jobs 2026",
-              url: "https://govt-jobs-2026-8m3h.vercel.app/",
+              url:
+                "https://govt-jobs-2026-8m3h.vercel.app/",
               description:
-                "Latest Government Jobs 2026 in India including Banking, Central Government, Railway, SSC, Defence, PSU and Healthcare jobs.",
+                "Latest Government Jobs 2026 in India.",
               potentialAction: {
                 "@type": "SearchAction",
                 target:
@@ -263,15 +315,18 @@ export default function Home() {
           }}
         />
 
-        {/* Organization Schema */}
+        {/* ORGANIZATION SCHEMA */}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
+              "@context":
+                "https://schema.org",
               "@type": "Organization",
               name: "Govt Jobs 2026",
-              url: "https://govt-jobs-2026-8m3h.vercel.app/",
+              url:
+                "https://govt-jobs-2026-8m3h.vercel.app/",
             }),
           }}
         />
@@ -298,7 +353,8 @@ export default function Home() {
           </p>
 
           <p className="header-subtitle">
-            Banking • Railway • SSC • Defence • PSU • Healthcare
+            Banking • Railway • SSC • Defence •
+            PSU • Healthcare
           </p>
 
         </header>
@@ -309,11 +365,14 @@ export default function Home() {
 
         <div className="notice-box">
 
-          <strong>📢 Important:</strong>
+          <strong>
+            📢 Important:
+          </strong>
 
           <span>
-            Check the official notification carefully
-            before applying for any government job.
+            Always check the official
+            recruitment notification before
+            applying for any government job.
           </span>
 
         </div>
@@ -325,33 +384,73 @@ export default function Home() {
         <section className="stats-section">
 
           <div className="stat-card">
-            <span className="stat-icon">📋</span>
-            <strong>{totalJobs}</strong>
-            <span>Total Jobs</span>
+
+            <span className="stat-icon">
+              📋
+            </span>
+
+            <strong>
+              {totalJobs}
+            </strong>
+
+            <span>
+              Total Jobs
+            </span>
+
           </div>
 
           <div className="stat-card">
-            <span className="stat-icon">🟢</span>
-            <strong>{openJobs}</strong>
-            <span>Open Jobs</span>
+
+            <span className="stat-icon">
+              🟢
+            </span>
+
+            <strong>
+              {openJobs}
+            </strong>
+
+            <span>
+              Open Jobs
+            </span>
+
           </div>
 
           <div className="stat-card">
-            <span className="stat-icon">🔥</span>
-            <strong>{closingJobs}</strong>
-            <span>Closing Soon</span>
+
+            <span className="stat-icon">
+              🔥
+            </span>
+
+            <strong>
+              {closingJobs}
+            </strong>
+
+            <span>
+              Closing Soon
+            </span>
+
           </div>
 
           <div className="stat-card">
-            <span className="stat-icon">🔴</span>
-            <strong>{closedJobs}</strong>
-            <span>Closed Jobs</span>
+
+            <span className="stat-icon">
+              🔴
+            </span>
+
+            <strong>
+              {closedJobs}
+            </strong>
+
+            <span>
+              Closed Jobs
+            </span>
+
           </div>
 
         </section>
 
         {/* =================================
-            SEARCH + FILTERS
+            SEARCH
         ================================= */}
 
         <section className="filters-section">
@@ -360,15 +459,17 @@ export default function Home() {
 
             <input
               type="text"
-              placeholder="🔎 Search jobs, organization, qualification, location..."
               value={search}
               onChange={(e) =>
                 setSearch(e.target.value)
               }
+              placeholder="🔎 Search jobs, organization, qualification, location..."
               aria-label="Search government jobs"
             />
 
           </div>
+
+          {/* FILTER GRID */}
 
           <div className="filter-grid">
 
@@ -445,7 +546,7 @@ export default function Home() {
         </section>
 
         {/* =================================
-            CATEGORY LINKS
+            CATEGORY SECTION
         ================================= */}
 
         <section className="category-links">
@@ -455,45 +556,59 @@ export default function Home() {
           </h2>
 
           <p className="section-description">
-            Quickly find government vacancies based
-            on your preferred job category.
+            Quickly find government vacancies
+            based on your preferred category.
           </p>
 
           <div className="category-grid">
 
             <Link href="/banking">
               🏦
-              <span>Banking Jobs 2026</span>
+              <span>
+                Banking Jobs 2026
+              </span>
             </Link>
 
             <Link href="/central-government">
               🏛️
-              <span>Central Government Jobs 2026</span>
+              <span>
+                Central Government Jobs 2026
+              </span>
             </Link>
 
             <Link href="/railway">
               🚆
-              <span>Railway Jobs 2026</span>
+              <span>
+                Railway Jobs 2026
+              </span>
             </Link>
 
             <Link href="/ssc">
               📋
-              <span>SSC Jobs 2026</span>
+              <span>
+                SSC Jobs 2026
+              </span>
             </Link>
 
             <Link href="/defence">
               🛡️
-              <span>Defence Jobs 2026</span>
+              <span>
+                Defence Jobs 2026
+              </span>
             </Link>
 
             <Link href="/psu">
               🏢
-              <span>PSU Jobs 2026</span>
+              <span>
+                PSU Jobs 2026
+              </span>
             </Link>
 
             <Link href="/healthcare">
               🏥
-              <span>Healthcare Jobs 2026</span>
+              <span>
+                Healthcare Jobs 2026
+              </span>
             </Link>
 
           </div>
@@ -514,15 +629,18 @@ export default function Home() {
 
             <p>
               Showing{" "}
-              <b>{filteredJobs.length}</b>{" "}
+              <b>
+                {filteredJobs.length}
+              </b>{" "}
               job(s)
             </p>
 
           </div>
 
-          {search ||
-          category !== "All" ||
-          status !== "All" ? (
+          {(search ||
+            category !== "All" ||
+            status !== "All") && (
+
             <button
               type="button"
               onClick={resetFilters}
@@ -530,12 +648,13 @@ export default function Home() {
             >
               Clear Filters
             </button>
-          ) : null}
+
+          )}
 
         </div>
 
         {/* =================================
-            JOB LIST
+            JOBS
         ================================= */}
 
         {filteredJobs.length === 0 ? (
@@ -551,8 +670,8 @@ export default function Home() {
             </h2>
 
             <p>
-              We couldn't find jobs matching
-              your search or filters.
+              We couldn't find any jobs
+              matching your search.
             </p>
 
             <button
@@ -589,35 +708,36 @@ export default function Home() {
                   <div className="job-badges">
 
                     {daysLeft !== null &&
-                    daysLeft >= 0 &&
-                    daysLeft <= 7 && (
+                      daysLeft >= 0 &&
+                      daysLeft <= 7 && (
 
-                      <span className="closing-badge">
-                        🔥 Closing Soon
-                      </span>
+                        <span className="closing-badge">
+                          🔥 Closing Soon
+                        </span>
 
-                    )}
+                      )}
 
                     {daysLeft !== null &&
-                    daysLeft > 7 && (
+                      daysLeft > 7 && (
 
-                      <span className="new-badge">
-                        🆕 Latest Job
-                      </span>
+                        <span className="new-badge">
+                          🆕 Latest Job
+                        </span>
 
-                    )}
+                      )}
 
-                    {currentStatus === "Closed" && (
+                    {currentStatus ===
+                      "Closed" && (
 
-                      <span className="closed-badge">
-                        🔴 Closed
-                      </span>
+                        <span className="closed-badge">
+                          🔴 Closed
+                        </span>
 
-                    )}
+                      )}
 
                   </div>
 
-                  {/* TITLE */}
+                  {/* JOB TITLE */}
 
                   <h2>
                     {job.title}
@@ -626,64 +746,100 @@ export default function Home() {
                   {/* ORGANIZATION */}
 
                   <p>
-                    🏢 <b>Organization:</b>{" "}
-                    {job.organization || "Not specified"}
+                    🏢{" "}
+                    <b>
+                      Organization:
+                    </b>{" "}
+                    {job.organization ||
+                      "Not specified"}
                   </p>
 
                   {/* CATEGORY */}
 
                   <p>
-                    📂 <b>Category:</b>{" "}
-                    {job.category || "Government Jobs"}
+                    📂{" "}
+                    <b>
+                      Category:
+                    </b>{" "}
+                    {job.category ||
+                      "Government Jobs"}
                   </p>
 
                   {/* POSTS */}
 
                   <p>
-                    👥 <b>Posts:</b>{" "}
-                    {job.posts || "Not specified"}
+                    👥{" "}
+                    <b>
+                      Posts:
+                    </b>{" "}
+                    {job.posts ||
+                      "Not specified"}
                   </p>
 
                   {/* QUALIFICATION */}
 
                   <p>
-                    🎓 <b>Qualification:</b>{" "}
-                    {job.qualification || "Not specified"}
+                    🎓{" "}
+                    <b>
+                      Qualification:
+                    </b>{" "}
+                    {job.qualification ||
+                      "Not specified"}
                   </p>
 
                   {/* AGE */}
 
                   <p>
-                    🎂 <b>Age Limit:</b>{" "}
-                    {job.ageLimit || "As per notification"}
+                    🎂{" "}
+                    <b>
+                      Age Limit:
+                    </b>{" "}
+                    {job.ageLimit ||
+                      "As per notification"}
                   </p>
 
                   {/* LOCATION */}
 
                   <p>
-                    📍 <b>Location:</b>{" "}
-                    {job.location || "India"}
+                    📍{" "}
+                    <b>
+                      Location:
+                    </b>{" "}
+                    {job.location ||
+                      "India"}
                   </p>
 
-                  {/* TYPE */}
+                  {/* JOB TYPE */}
 
                   <p>
-                    💼 <b>Job Type:</b>{" "}
-                    {job.jobType || "Government"}
+                    💼{" "}
+                    <b>
+                      Job Type:
+                    </b>{" "}
+                    {job.jobType ||
+                      "Government"}
                   </p>
 
                   {/* SALARY */}
 
                   <p>
-                    💰 <b>Salary:</b>{" "}
-                    {job.salary || "As per notification"}
+                    💰{" "}
+                    <b>
+                      Salary:
+                    </b>{" "}
+                    {job.salary ||
+                      "As per notification"}
                   </p>
 
                   {/* LAST DATE */}
 
                   <p>
-                    📅 <b>Last Date:</b>{" "}
-                    {job.lastDate || "Check notification"}
+                    📅{" "}
+                    <b>
+                      Last Date:
+                    </b>{" "}
+                    {job.lastDate ||
+                      "Check notification"}
                   </p>
 
                   {/* DAYS LEFT */}
@@ -691,8 +847,10 @@ export default function Home() {
                   {daysLeft !== null && (
 
                     <p>
-
-                      ⏳ <b>Application Deadline:</b>{" "}
+                      ⏳{" "}
+                      <b>
+                        Application Deadline:
+                      </b>{" "}
 
                       {daysLeft < 0 ? (
 
@@ -703,7 +861,7 @@ export default function Home() {
                       ) : daysLeft === 0 ? (
 
                         <span className="closing">
-                          Last Date Today!
+                          ⚠️ Last Date Today!
                         </span>
 
                       ) : daysLeft === 1 ? (
@@ -734,94 +892,10 @@ export default function Home() {
 
                   <p>
 
-                    📌 <b>Status:</b>{" "}
+                    📌{" "}
+                    <b>
+                      Status:
+                    </b>{" "}
 
                     <span
-                      className={
-                        currentStatus === "Open"
-                          ? "open"
-                          : currentStatus === "Closed"
-                          ? "closed"
-                          : "check"
-                      }
-                    >
-                      {currentStatus}
-                    </span>
-
-                  </p>
-
-                  {/* BUTTONS */}
-
-                  <div className="job-buttons">
-
-                    {job.notificationLink && (
-
-                      <a
-                        href={job.notificationLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="notification-button"
-                      >
-                        📄 View Notification →
-                      </a>
-
-                    )}
-
-                    {job.applyLink && (
-
-                      <a
-                        href={job.applyLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="apply-button"
-                      >
-                        🚀 Apply Now →
-                      </a>
-
-                    )}
-
-                  </div>
-
-                </article>
-
-              );
-            })}
-
-          </div>
-
-        )}
-
-        {/* =================================
-            ADVERTISEMENT SPACE
-        ================================= */}
-
-        <section className="ad-placeholder">
-
-          <span>Advertisement</span>
-
-        </section>
-
-        {/* =================================
-            SEO CONTENT
-        ================================= */}
-
-        <section className="seo-content">
-
-          <h2>
-            Latest Government Jobs 2026 in India
-          </h2>
-
-          <p>
-            Govt Jobs 2026 provides a convenient
-            platform to discover the latest
-            government job notifications across India.
-            Candidates can find opportunities in
-            Banking, Railway, SSC, Defence, PSU,
-            Healthcare and Central Government
-            departments.
-          </p>
-
-          <p>
-            Always verify eligibility, age limit,
-            application dates, fees and other
-            requirements from the official rec
+              
