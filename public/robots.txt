@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://govt-jobs-2026-8m3h.vercel.app/sitemap.xml
+Sitemap: /sitemap.xml
