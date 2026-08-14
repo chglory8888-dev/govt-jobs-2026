@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { jobs } from "../data/jobs";
 
 export default function Home() {
@@ -11,14 +11,21 @@ export default function Home() {
 
   const categories = [
     "All",
-    ...new Set(jobs.map((job) => job.category)),
+    ...new Set(jobs.map((job) => job.category).filter(Boolean)),
   ];
 
   const statuses = ["All", "Open", "Closing Soon", "Closed"];
 
-  // Convert date safely for sorting
+  // --------------------------------
+  // DATE HELPERS
+  // --------------------------------
+
   const getDateValue = (date) => {
     if (!date) return 0;
+
+    if (date instanceof Date) {
+      return date.getTime();
+    }
 
     const parsedDate = new Date(date);
 
@@ -26,8 +33,8 @@ export default function Home() {
       return parsedDate.getTime();
     }
 
-    // Try DD-MM-YYYY / DD/MM/YYYY
-    const parts = date.split(/[-/]/);
+    // DD-MM-YYYY / DD/MM/YYYY
+    const parts = String(date).split(/[-/]/);
 
     if (parts.length === 3) {
       const day = parseInt(parts[0]);
@@ -85,47 +92,96 @@ export default function Home() {
     return "Open";
   };
 
-  const filteredJobs = jobs
-    .filter((job) => {
-      const searchText = search.toLowerCase().trim();
+  // --------------------------------
+  // FILTER + SORT
+  // --------------------------------
 
-      const matchesSearch =
-        job.title?.toLowerCase().includes(searchText) ||
-        job.organization?.toLowerCase().includes(searchText) ||
-        job.qualification?.toLowerCase().includes(searchText) ||
-        job.category?.toLowerCase().includes(searchText) ||
-        job.location?.toLowerCase().includes(searchText);
+  const filteredJobs = useMemo(() => {
+    return jobs
+      .filter((job) => {
+        const searchText = search.toLowerCase().trim();
 
-      const matchesCategory =
-        category === "All" ||
-        job.category === category;
+        if (!searchText) {
+          return true;
+        }
 
-      const currentStatus = getJobStatus(job);
+        const searchableText = [
+          job.title,
+          job.organization,
+          job.qualification,
+          job.category,
+          job.location,
+          job.jobType,
+          job.posts,
+          job.salary,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
 
-      const matchesStatus =
-        status === "All" ||
-        currentStatus === status;
+        return searchableText.includes(searchText);
+      })
 
-      return (
-        matchesSearch &&
-        matchesCategory &&
-        matchesStatus
-      );
-    })
-    .sort((a, b) => {
-      const dateA = getDateValue(a.lastDate);
-      const dateB = getDateValue(b.lastDate);
+      .filter((job) => {
+        return (
+          category === "All" ||
+          job.category === category
+        );
+      })
 
-      if (sortBy === "Latest") {
-        return dateB - dateA;
-      }
+      .filter((job) => {
+        const currentStatus = getJobStatus(job);
 
-      if (sortBy === "Deadline") {
-        return dateA - dateB;
-      }
+        return (
+          status === "All" ||
+          currentStatus === status
+        );
+      })
 
-      return 0;
-    });
+      .sort((a, b) => {
+        const dateA = getDateValue(a.lastDate);
+        const dateB = getDateValue(b.lastDate);
+
+        if (sortBy === "Latest") {
+          return dateB - dateA;
+        }
+
+        if (sortBy === "Deadline") {
+          return dateA - dateB;
+        }
+
+        return 0;
+      });
+  }, [search, category, status, sortBy]);
+
+  // --------------------------------
+  // RESET FILTERS
+  // --------------------------------
+
+  const resetFilters = () => {
+    setSearch("");
+    setCategory("All");
+    setStatus("All");
+    setSortBy("Latest");
+  };
+
+  // --------------------------------
+  // STATISTICS
+  // --------------------------------
+
+  const totalJobs = jobs.length;
+
+  const openJobs = jobs.filter(
+    (job) => getJobStatus(job) === "Open"
+  ).length;
+
+  const closingJobs = jobs.filter(
+    (job) => getJobStatus(job) === "Closing Soon"
+  ).length;
+
+  const closedJobs = jobs.filter(
+    (job) => getJobStatus(job) === "Closed"
+  ).length;
 
   return (
     <>
@@ -136,12 +192,22 @@ export default function Home() {
 
         <meta
           name="description"
-          content="Find the latest Government Jobs 2026 in India including Banking, Central Government, Railway, SSC, Defence, PSU and Healthcare job notifications."
+          content="Find the latest Government Jobs 2026 in India including Banking, Central Government, Railway, SSC, Defence, PSU and Healthcare jobs."
         />
 
         <meta
           name="keywords"
-          content="Govt Jobs 2026, Government Jobs 2026, Central Government Jobs, Banking Jobs, Railway Jobs, SSC Jobs, Defence Jobs, PSU Jobs, Healthcare Jobs"
+          content="Govt Jobs 2026, Government Jobs 2026, Central Government Jobs, Banking Jobs, Railway Jobs, SSC Jobs, Defence Jobs, PSU Jobs, Healthcare Jobs, Government Vacancies India"
+        />
+
+        <meta
+          name="robots"
+          content="index, follow"
+        />
+
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
         />
 
         <meta
@@ -152,6 +218,27 @@ export default function Home() {
         <link
           rel="canonical"
           href="https://govt-jobs-2026-8m3h.vercel.app/"
+        />
+
+        {/* Open Graph */}
+        <meta
+          property="og:title"
+          content="Govt Jobs 2026 | Latest Government Jobs in India"
+        />
+
+        <meta
+          property="og:description"
+          content="Latest Government Jobs 2026, Banking Jobs, Railway Jobs, SSC Jobs, Defence Jobs, PSU Jobs and Healthcare Jobs."
+        />
+
+        <meta
+          property="og:type"
+          content="website"
+        />
+
+        <meta
+          property="og:url"
+          content="https://govt-jobs-2026-8m3h.vercel.app/"
         />
 
         {/* Website Schema */}
@@ -165,6 +252,13 @@ export default function Home() {
               url: "https://govt-jobs-2026-8m3h.vercel.app/",
               description:
                 "Latest Government Jobs 2026 in India including Banking, Central Government, Railway, SSC, Defence, PSU and Healthcare jobs.",
+              potentialAction: {
+                "@type": "SearchAction",
+                target:
+                  "https://govt-jobs-2026-8m3h.vercel.app/?search={search_term_string}",
+                "query-input":
+                  "required name=search_term_string",
+              },
             }),
           }}
         />
@@ -185,327 +279,549 @@ export default function Home() {
 
       <div className="container">
 
-        {/* HEADER */}
-        <div className="header">
-          <h1>🔥 Latest Govt Jobs 2026</h1>
+        {/* =================================
+            HEADER
+        ================================= */}
+
+        <header className="header">
+
+          <div className="header-badge">
+            🇮🇳 Government Job Updates
+          </div>
+
+          <h1>
+            🔥 Latest Govt Jobs 2026
+          </h1>
 
           <p>
             Find Government Jobs Across India
           </p>
-        </div>
 
-        {/* SEARCH */}
-        <div className="filters">
+          <p className="header-subtitle">
+            Banking • Railway • SSC • Defence • PSU • Healthcare
+          </p>
 
-          <input
-            type="text"
-            placeholder="🔎 Search jobs, organization, qualification..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-          />
+        </header>
 
-          {/* CATEGORY */}
-          <select
-            value={category}
-            onChange={(e) =>
-              setCategory(e.target.value)
-            }
-          >
-            {categories.map((cat) => (
-              <option
-                key={cat}
-                value={cat}
-              >
-                {cat}
-              </option>
-            ))}
-          </select>
+        {/* =================================
+            NOTICE
+        ================================= */}
 
-          {/* STATUS */}
-          <select
-            value={status}
-            onChange={(e) =>
-              setStatus(e.target.value)
-            }
-          >
-            {statuses.map((item) => (
-              <option
-                key={item}
-                value={item}
-              >
-                {item}
-              </option>
-            ))}
-          </select>
+        <div className="notice-box">
 
-          {/* SORT */}
-          <select
-            value={sortBy}
-            onChange={(e) =>
-              setSortBy(e.target.value)
-            }
-          >
-            <option value="Latest">
-              Latest Jobs
-            </option>
+          <strong>📢 Important:</strong>
 
-            <option value="Deadline">
-              Closing Soon
-            </option>
-          </select>
+          <span>
+            Check the official notification carefully
+            before applying for any government job.
+          </span>
 
         </div>
 
-        {/* CATEGORY LINKS */}
-        <div className="category-links">
+        {/* =================================
+            STATISTICS
+        ================================= */}
+
+        <section className="stats-section">
+
+          <div className="stat-card">
+            <span className="stat-icon">📋</span>
+            <strong>{totalJobs}</strong>
+            <span>Total Jobs</span>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-icon">🟢</span>
+            <strong>{openJobs}</strong>
+            <span>Open Jobs</span>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-icon">🔥</span>
+            <strong>{closingJobs}</strong>
+            <span>Closing Soon</span>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-icon">🔴</span>
+            <strong>{closedJobs}</strong>
+            <span>Closed Jobs</span>
+          </div>
+
+        </section>
+
+        {/* =================================
+            SEARCH + FILTERS
+        ================================= */}
+
+        <section className="filters-section">
+
+          <div className="search-wrapper">
+
+            <input
+              type="text"
+              placeholder="🔎 Search jobs, organization, qualification, location..."
+              value={search}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
+              aria-label="Search government jobs"
+            />
+
+          </div>
+
+          <div className="filter-grid">
+
+            <select
+              value={category}
+              onChange={(e) =>
+                setCategory(e.target.value)
+              }
+              aria-label="Filter by category"
+            >
+
+              {categories.map((cat) => (
+                <option
+                  key={cat}
+                  value={cat}
+                >
+                  {cat === "All"
+                    ? "📂 All Categories"
+                    : cat}
+                </option>
+              ))}
+
+            </select>
+
+            <select
+              value={status}
+              onChange={(e) =>
+                setStatus(e.target.value)
+              }
+              aria-label="Filter by status"
+            >
+
+              {statuses.map((item) => (
+                <option
+                  key={item}
+                  value={item}
+                >
+                  {item === "All"
+                    ? "📌 All Status"
+                    : item}
+                </option>
+              ))}
+
+            </select>
+
+            <select
+              value={sortBy}
+              onChange={(e) =>
+                setSortBy(e.target.value)
+              }
+              aria-label="Sort jobs"
+            >
+
+              <option value="Latest">
+                🆕 Latest Jobs
+              </option>
+
+              <option value="Deadline">
+                ⏰ Closing Soon
+              </option>
+
+            </select>
+
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="reset-button"
+            >
+              🔄 Reset
+            </button>
+
+          </div>
+
+        </section>
+
+        {/* =================================
+            CATEGORY LINKS
+        ================================= */}
+
+        <section className="category-links">
 
           <h2>
             Explore Government Jobs by Category
           </h2>
 
+          <p className="section-description">
+            Quickly find government vacancies based
+            on your preferred job category.
+          </p>
+
           <div className="category-grid">
 
             <Link href="/banking">
-              🏦 Banking Jobs 2026
+              🏦
+              <span>Banking Jobs 2026</span>
             </Link>
 
             <Link href="/central-government">
-              🏛️ Central Government Jobs 2026
+              🏛️
+              <span>Central Government Jobs 2026</span>
             </Link>
 
             <Link href="/railway">
-              🚆 Railway Jobs 2026
+              🚆
+              <span>Railway Jobs 2026</span>
             </Link>
 
             <Link href="/ssc">
-              📋 SSC Jobs 2026
+              📋
+              <span>SSC Jobs 2026</span>
             </Link>
 
             <Link href="/defence">
-              🛡️ Defence Jobs 2026
+              🛡️
+              <span>Defence Jobs 2026</span>
             </Link>
 
             <Link href="/psu">
-              🏢 PSU Jobs 2026
+              🏢
+              <span>PSU Jobs 2026</span>
             </Link>
 
             <Link href="/healthcare">
-              🏥 Healthcare Jobs 2026
+              🏥
+              <span>Healthcare Jobs 2026</span>
             </Link>
 
           </div>
+
+        </section>
+
+        {/* =================================
+            RESULTS HEADER
+        ================================= */}
+
+        <div className="results-header">
+
+          <div>
+
+            <h2>
+              Latest Government Job Notifications
+            </h2>
+
+            <p>
+              Showing{" "}
+              <b>{filteredJobs.length}</b>{" "}
+              job(s)
+            </p>
+
+          </div>
+
+          {search ||
+          category !== "All" ||
+          status !== "All" ? (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="small-reset"
+            >
+              Clear Filters
+            </button>
+          ) : null}
+
         </div>
 
-        {/* JOB COUNT */}
-        <p className="job-count">
-          Showing{" "}
-          <b>{filteredJobs.length}</b>{" "}
-          job(s)
-        </p>
+        {/* =================================
+            JOB LIST
+        ================================= */}
 
-        {/* JOB LIST */}
         {filteredJobs.length === 0 ? (
 
           <div className="no-jobs">
 
+            <div className="no-jobs-icon">
+              🔎
+            </div>
+
             <h2>
-              😔 No Jobs Found
+              No Jobs Found
             </h2>
 
             <p>
-              Try another search, category,
-              or status.
+              We couldn't find jobs matching
+              your search or filters.
             </p>
+
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="apply-button"
+            >
+              🔄 Show All Jobs
+            </button>
 
           </div>
 
         ) : (
 
-          filteredJobs.map((job) => {
+          <div className="jobs-list">
 
-            const currentStatus =
-              getJobStatus(job);
+            {filteredJobs.map((job) => {
 
-            const daysLeft =
-              getDaysLeft(job.lastDate);
+              const currentStatus =
+                getJobStatus(job);
 
-            return (
+              const daysLeft =
+                getDaysLeft(job.lastDate);
 
-              <div
-                key={job.id}
-                className="job-card"
-              >
+              return (
 
-                {/* NEW / CLOSING BADGE */}
-                {daysLeft !== null &&
-                  daysLeft >= 0 &&
-                  daysLeft <= 7 && (
+                <article
+                  key={job.id}
+                  className="job-card"
+                >
 
-                    <div className="closing-badge">
-                      🔥 Closing Soon
-                    </div>
+                  {/* BADGES */}
 
-                  )}
+                  <div className="job-badges">
 
-                {daysLeft !== null &&
-                  daysLeft > 7 && (
+                    {daysLeft !== null &&
+                    daysLeft >= 0 &&
+                    daysLeft <= 7 && (
 
-                    <div className="new-badge">
-                      🆕 Latest Job
-                    </div>
-
-                  )}
-
-                <h2>
-                  {job.title}
-                </h2>
-
-                <p>
-                  🏢 <b>Organization:</b>{" "}
-                  {job.organization}
-                </p>
-
-                <p>
-                  📂 <b>Category:</b>{" "}
-                  {job.category}
-                </p>
-
-                <p>
-                  👥 <b>Posts:</b>{" "}
-                  {job.posts}
-                </p>
-
-                <p>
-                  🎓 <b>Qualification:</b>{" "}
-                  {job.qualification}
-                </p>
-
-                <p>
-                  🎂 <b>Age Limit:</b>{" "}
-                  {job.ageLimit}
-                </p>
-
-                <p>
-                  📍 <b>Location:</b>{" "}
-                  {job.location}
-                </p>
-
-                <p>
-                  💼 <b>Job Type:</b>{" "}
-                  {job.jobType}
-                </p>
-
-                <p>
-                  💰 <b>Salary:</b>{" "}
-                  {job.salary}
-                </p>
-
-                <p>
-                  📅 <b>Last Date:</b>{" "}
-                  {job.lastDate}
-                </p>
-
-                {/* DAYS LEFT */}
-                {daysLeft !== null && (
-                  <p>
-                    ⏳ <b>Days Left:</b>{" "}
-
-                    {daysLeft < 0 ? (
-                      <span className="closed">
-                        Application Closed
+                      <span className="closing-badge">
+                        🔥 Closing Soon
                       </span>
-                    ) : daysLeft === 0 ? (
-                      <span className="closing">
-                        Last Date Today!
-                      </span>
-                    ) : daysLeft === 1 ? (
-                      <span className="closing">
-                        1 Day Left!
-                      </span>
-                    ) : (
-                      <span className="days-left">
-                        {daysLeft} Days Left
-                      </span>
+
                     )}
+
+                    {daysLeft !== null &&
+                    daysLeft > 7 && (
+
+                      <span className="new-badge">
+                        🆕 Latest Job
+                      </span>
+
+                    )}
+
+                    {currentStatus === "Closed" && (
+
+                      <span className="closed-badge">
+                        🔴 Closed
+                      </span>
+
+                    )}
+
+                  </div>
+
+                  {/* TITLE */}
+
+                  <h2>
+                    {job.title}
+                  </h2>
+
+                  {/* ORGANIZATION */}
+
+                  <p>
+                    🏢 <b>Organization:</b>{" "}
+                    {job.organization || "Not specified"}
                   </p>
-                )}
 
-                {/* STATUS */}
-                <p>
-                  📌 <b>Status:</b>{" "}
+                  {/* CATEGORY */}
 
-                  <span
-                    className={
-                      currentStatus === "Open"
-                        ? "open"
-                        : currentStatus === "Closed"
-                        ? "closed"
-                        : "check"
-                    }
-                  >
-                    {currentStatus}
-                  </span>
-                </p>
+                  <p>
+                    📂 <b>Category:</b>{" "}
+                    {job.category || "Government Jobs"}
+                  </p>
 
-                {/* BUTTONS */}
-                <div className="job-buttons">
+                  {/* POSTS */}
 
-                  <a
-                    href={job.notificationLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="apply-button"
-                  >
-                    View Notification →
-                  </a>
+                  <p>
+                    👥 <b>Posts:</b>{" "}
+                    {job.posts || "Not specified"}
+                  </p>
 
-                  <a
-                    href={job.applyLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="apply-button"
-                  >
-                    Apply Now →
-                  </a>
+                  {/* QUALIFICATION */}
 
-                </div>
+                  <p>
+                    🎓 <b>Qualification:</b>{" "}
+                    {job.qualification || "Not specified"}
+                  </p>
 
-              </div>
+                  {/* AGE */}
 
-            );
-          })
+                  <p>
+                    🎂 <b>Age Limit:</b>{" "}
+                    {job.ageLimit || "As per notification"}
+                  </p>
 
-        )}
+                  {/* LOCATION */}
 
-        {/* FOOTER */}
-        <footer>
+                  <p>
+                    📍 <b>Location:</b>{" "}
+                    {job.location || "India"}
+                  </p>
 
-          <p>
-            © 2026 Govt Jobs 2026.
-            All Rights Reserved.
-          </p>
+                  {/* TYPE */}
 
-          <div className="footer-links">
+                  <p>
+                    💼 <b>Job Type:</b>{" "}
+                    {job.jobType || "Government"}
+                  </p>
 
-            <Link href="/privacy-policy">
-              Privacy Policy
-            </Link>
+                  {/* SALARY */}
 
-            <Link href="/disclaimer">
-              Disclaimer
-            </Link>
+                  <p>
+                    💰 <b>Salary:</b>{" "}
+                    {job.salary || "As per notification"}
+                  </p>
 
-            <Link href="/terms">
-              Terms & Conditions
-            </Link>
+                  {/* LAST DATE */}
+
+                  <p>
+                    📅 <b>Last Date:</b>{" "}
+                    {job.lastDate || "Check notification"}
+                  </p>
+
+                  {/* DAYS LEFT */}
+
+                  {daysLeft !== null && (
+
+                    <p>
+
+                      ⏳ <b>Application Deadline:</b>{" "}
+
+                      {daysLeft < 0 ? (
+
+                        <span className="closed">
+                          Application Closed
+                        </span>
+
+                      ) : daysLeft === 0 ? (
+
+                        <span className="closing">
+                          Last Date Today!
+                        </span>
+
+                      ) : daysLeft === 1 ? (
+
+                        <span className="closing">
+                          ⚠️ 1 Day Left!
+                        </span>
+
+                      ) : daysLeft <= 7 ? (
+
+                        <span className="closing">
+                          ⚠️ {daysLeft} Days Left
+                        </span>
+
+                      ) : (
+
+                        <span className="days-left">
+                          {daysLeft} Days Left
+                        </span>
+
+                      )}
+
+                    </p>
+
+                  )}
+
+                  {/* STATUS */}
+
+                  <p>
+
+                    📌 <b>Status:</b>{" "}
+
+                    <span
+                      className={
+                        currentStatus === "Open"
+                          ? "open"
+                          : currentStatus === "Closed"
+                          ? "closed"
+                          : "check"
+                      }
+                    >
+                      {currentStatus}
+                    </span>
+
+                  </p>
+
+                  {/* BUTTONS */}
+
+                  <div className="job-buttons">
+
+                    {job.notificationLink && (
+
+                      <a
+                        href={job.notificationLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="notification-button"
+                      >
+                        📄 View Notification →
+                      </a>
+
+                    )}
+
+                    {job.applyLink && (
+
+                      <a
+                        href={job.applyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="apply-button"
+                      >
+                        🚀 Apply Now →
+                      </a>
+
+                    )}
+
+                  </div>
+
+                </article>
+
+              );
+            })}
 
           </div>
 
-        </footer>
+        )}
 
-      </div>
-    </>
-  );
-            }
+        {/* =================================
+            ADVERTISEMENT SPACE
+        ================================= */}
+
+        <section className="ad-placeholder">
+
+          <span>Advertisement</span>
+
+        </section>
+
+        {/* =================================
+            SEO CONTENT
+        ================================= */}
+
+        <section className="seo-content">
+
+          <h2>
+            Latest Government Jobs 2026 in India
+          </h2>
+
+          <p>
+            Govt Jobs 2026 provides a convenient
+            platform to discover the latest
+            government job notifications across India.
+            Candidates can find opportunities in
+            Banking, Railway, SSC, Defence, PSU,
+            Healthcare and Central Government
+            departments.
+          </p>
+
+          <p>
+            Always verify eligibility, age limit,
+            application dates, fees and other
+            requirements from the official rec
