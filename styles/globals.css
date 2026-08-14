@@ -628,3 +628,43 @@ footer {
     border-radius: 14px 14px 0 0;
   }
       }
+/* ==============================
+   TOP NAVIGATION
+============================== */
+
+.top-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
+}
+
+.top-nav a {
+  padding: 9px 14px;
+  border-radius: 9px;
+  color: #172033;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.top-nav a:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+@media (max-width: 500px) {
+  .top-nav {
+    gap: 3px;
+  }
+
+  .top-nav a {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+}
