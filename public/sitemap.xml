@@ -1,50 +1,29 @@
-export async function getServerSideProps({ res }) {
-  const baseUrl =
-    "https://YOUR-DOMAIN.vercel.app";
+<?xml version="1.0" encoding="UTF-8"?>
 
-  const urls = [
-    "",
-    "/banking",
-    "/central-government",
-    "/railway",
-    "/ssc",
-    "/defence",
-    "/psu",
-    "/healthcare",
-    "/privacy-policy",
-    "/disclaimer",
-    "/terms",
-  ];
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
->
-${urls
-  .map(
-    (url) => `
   <url>
-    <loc>${baseUrl}${url}</loc>
+    <loc>https://govt-jobs-2026-8m3h.vercel.app/</loc>
     <changefreq>daily</changefreq>
-    <priority>${url === "" ? "1.0" : "0.7"}</priority>
-  </url>`
-  )
-  .join("")}
-</urlset>`;
+    <priority>1.0</priority>
+  </url>
 
-  res.setHeader(
-    "Content-Type",
-    "text/xml"
-  );
+  <url>
+    <loc>https://govt-jobs-2026-8m3h.vercel.app/privacy-policy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 
-  res.write(sitemap);
-  res.end();
+  <url>
+    <loc>https://govt-jobs-2026-8m3h.vercel.app/disclaimer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 
-  return {
-    props: {},
-  };
-}
+  <url>
+    <loc>https://govt-jobs-2026-8m3h.vercel.app/terms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 
-export default function Sitemap() {
-  return null;
-}
+</urlset>
