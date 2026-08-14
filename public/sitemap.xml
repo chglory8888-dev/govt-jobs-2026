@@ -1,69 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
+export async function getServerSideProps({ res }) {
+  const baseUrl =
+    "https://YOUR-DOMAIN.vercel.app";
 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  const urls = [
+    "",
+    "/banking",
+    "/central-government",
+    "/railway",
+    "/ssc",
+    "/defence",
+    "/psu",
+    "/healthcare",
+    "/privacy-policy",
+    "/disclaimer",
+    "/terms",
+  ];
 
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+>
+${urls
+  .map(
+    (url) => `
   <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/</loc>
-  </url>
+    <loc>${baseUrl}${url}</loc>
+    <changefreq>daily</changefreq>
+    <priority>${url === "" ? "1.0" : "0.7"}</priority>
+  </url>`
+  )
+  .join("")}
+</urlset>`;
 
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/about</loc>
-  </url>
+  res.setHeader(
+    "Content-Type",
+    "text/xml"
+  );
 
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/contact</loc>
-  </url>
+  res.write(sitemap);
+  res.end();
 
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/privacy-policy</loc>
-  </url>
+  return {
+    props: {},
+  };
+}
 
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/disclaimer</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/terms</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/1</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/2</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/3</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/4</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/5</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/6</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/7</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/8</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/9</loc>
-  </url>
-
-  <url>
-    <loc>https://govt-jobs-2026-8m3h.vercel.app/jobs/10</loc>
-  </url>
-
-</urlset>
+export default function Sitemap() {
+  return null;
+}
