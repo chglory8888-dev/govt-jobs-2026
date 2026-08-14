@@ -137,6 +137,12 @@ export default function Home() {
       </Head>
 
       <main className="container">
+            <nav className="top-nav">
+  <Link href="/">🏠 Home</Link>
+  <a href="#categories">📂 Categories</a>
+  <a href="#jobs">📋 Latest Jobs</a>
+  <a href="#contact">📞 Contact</a>
+</nav>
 
         <header className="header">
 
