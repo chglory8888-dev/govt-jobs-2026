@@ -102,7 +102,6 @@ export default function ResumeBuilder() {
         />
 
         <meta name="robots" content="index, follow" />
-
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link rel="canonical" href="/resume-builder" />
@@ -356,7 +355,6 @@ export default function ResumeBuilder() {
 
       <div className="page">
 
-        {/* NAVIGATION */}
         <nav className="top-nav no-print">
           <div className="container nav-inner">
 
@@ -375,7 +373,6 @@ export default function ResumeBuilder() {
           </div>
         </nav>
 
-        {/* HERO */}
         <header className="career-header no-print">
           <div className="container">
 
@@ -411,31 +408,26 @@ export default function ResumeBuilder() {
           </div>
         </header>
 
-        {/* BUILDER */}
         <main className="resume-builder-wrapper">
 
           <div className="container">
 
             <div className="section-heading no-print">
-
               <h2>📝 Build Your Resume</h2>
 
               <p>
                 Fill in your details below. Your resume preview will update
                 when you generate it.
               </p>
-
             </div>
 
             <div className="resume-builder-grid">
 
-              {/* FORM */}
               <section className="resume-form-card no-print">
 
                 <h2>Personal Information</h2>
 
                 <div className="resume-field">
-
                   <label>Full Name *</label>
 
                   <input
@@ -446,11 +438,9 @@ export default function ResumeBuilder() {
                       updateField("name", e.target.value)
                     }
                   />
-
                 </div>
 
                 <div className="resume-field">
-
                   <label>Target Job Role</label>
 
                   <input
@@ -461,11 +451,9 @@ export default function ResumeBuilder() {
                       updateField("role", e.target.value)
                     }
                   />
-
                 </div>
 
                 <div className="resume-field">
-
                   <label>Email *</label>
 
                   <input
@@ -476,11 +464,9 @@ export default function ResumeBuilder() {
                       updateField("email", e.target.value)
                     }
                   />
-
                 </div>
 
                 <div className="resume-field">
-
                   <label>Phone</label>
 
                   <input
@@ -491,11 +477,9 @@ export default function ResumeBuilder() {
                       updateField("phone", e.target.value)
                     }
                   />
-
                 </div>
 
                 <div className="resume-field">
-
                   <label>Location</label>
 
                   <input
@@ -506,11 +490,9 @@ export default function ResumeBuilder() {
                       updateField("location", e.target.value)
                     }
                   />
-
                 </div>
 
                 <div className="resume-field">
-
                   <label>LinkedIn</label>
 
                   <input
@@ -521,11 +503,9 @@ export default function ResumeBuilder() {
                       updateField("linkedin", e.target.value)
                     }
                   />
-
                 </div>
 
                 <div className="resume-field">
-
                   <label>GitHub / Portfolio</label>
 
                   <input
@@ -536,13 +516,11 @@ export default function ResumeBuilder() {
                       updateField("github", e.target.value)
                     }
                   />
-
                 </div>
 
                 <h2>Professional Summary</h2>
 
                 <div className="resume-field">
-
                   <label>Summary</label>
 
                   <textarea
@@ -552,13 +530,11 @@ export default function ResumeBuilder() {
                       updateField("summary", e.target.value)
                     }
                   />
-
                 </div>
 
                 <h2>Skills</h2>
 
                 <div className="resume-field">
-
                   <label>
                     Skills — separate each skill with a comma
                   </label>
@@ -570,13 +546,11 @@ export default function ResumeBuilder() {
                       updateField("skills", e.target.value)
                     }
                   />
-
                 </div>
 
                 <h2>Education</h2>
 
                 <div className="resume-field">
-
                   <label>Education</label>
 
                   <textarea
@@ -589,13 +563,11 @@ CGPA: 7.8`}
                       updateField("education", e.target.value)
                     }
                   />
-
                 </div>
 
                 <h2>Experience</h2>
 
                 <div className="resume-field">
-
                   <label>Experience</label>
 
                   <textarea
@@ -608,13 +580,11 @@ CGPA: 7.8`}
                       updateField("experience", e.target.value)
                     }
                   />
-
                 </div>
 
                 <h2>Projects</h2>
 
                 <div className="resume-field">
-
                   <label>Projects</label>
 
                   <textarea
@@ -627,13 +597,11 @@ CGPA: 7.8`}
                       updateField("projects", e.target.value)
                     }
                   />
-
                 </div>
 
                 <h2>Certifications</h2>
 
                 <div className="resume-field">
-
                   <label>Certifications</label>
 
                   <textarea
@@ -645,13 +613,11 @@ Google Project Management`}
                       updateField("certifications", e.target.value)
                     }
                   />
-
                 </div>
 
                 <h2>Achievements</h2>
 
                 <div className="resume-field">
-
                   <label>Achievements</label>
 
                   <textarea
@@ -661,7 +627,6 @@ Google Project Management`}
                       updateField("achievements", e.target.value)
                     }
                   />
-
                 </div>
 
                 <div className="resume-actions">
@@ -686,7 +651,6 @@ Google Project Management`}
 
               </section>
 
-              {/* PREVIEW */}
               <section
                 className="resume-preview-card"
                 id="resume-preview"
@@ -716,7 +680,6 @@ Google Project Management`}
                 </div>
 
                 {showResume && (
-
                   <div id="resume-print-area">
 
                     <div className="resume-preview">
@@ -751,10 +714,9 @@ Google Project Management`}
                             {" • "}
                             {form.location}
                           </span>
-                        ))}
+                        )}
 
                         {(form.linkedin || form.github) && (
-
                           <div>
 
                             {form.linkedin && (
@@ -776,7 +738,6 @@ Google Project Management`}
                       </div>
 
                       {form.summary && (
-
                         <section className="resume-section">
 
                           <h3>
@@ -791,7 +752,6 @@ Google Project Management`}
                       )}
 
                       {form.skills && (
-
                         <section className="resume-section">
 
                           <h3>
@@ -801,10 +761,13 @@ Google Project Management`}
                           <div className="resume-skills">
 
                             {splitItems(form.skills).map((skill) => (
-                              <span className="resume-skill" key={skill}>
+                              <span
+                                className="resume-skill"
+                                key={skill}
+                              >
                                 {skill}
                               </span>
-                             ))}
+                            ))}
 
                           </div>
 
@@ -812,7 +775,6 @@ Google Project Management`}
                       )}
 
                       {form.education && (
-
                         <section className="resume-section">
 
                           <h3>
@@ -827,7 +789,6 @@ Google Project Management`}
                       )}
 
                       {form.experience && (
-
                         <section className="resume-section">
 
                           <h3>
@@ -842,7 +803,6 @@ Google Project Management`}
                       )}
 
                       {form.projects && (
-
                         <section className="resume-section">
 
                           <h3>
@@ -857,7 +817,6 @@ Google Project Management`}
                       )}
 
                       {form.certifications && (
-
                         <section className="resume-section">
 
                           <h3>
@@ -872,7 +831,6 @@ Google Project Management`}
                       )}
 
                       {form.achievements && (
-
                         <section className="resume-section">
 
                           <h3>
@@ -915,7 +873,6 @@ Google Project Management`}
 
             </div>
 
-            {/* RESUME TIPS */}
             <section className="career-section no-print">
 
               <div className="section-heading">
@@ -1015,7 +972,6 @@ Google Project Management`}
 
             </section>
 
-            {/* FINAL CTA */}
             <section className="career-section no-print">
 
               <div className="notice-box">
@@ -1042,7 +998,6 @@ Google Project Management`}
 
         </main>
 
-        {/* FOOTER */}
         <footer className="site-footer no-print">
 
           <div className="container">
@@ -1084,3 +1039,4 @@ Google Project Management`}
     </>
   );
 }
+
