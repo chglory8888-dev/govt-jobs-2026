@@ -22,9 +22,7 @@ export default function Home() {
 
   const categories = [
     "All",
-    ...new Set(
-      jobs.map((job) => job.category).filter(Boolean)
-    ),
+    ...new Set(jobs.map((job) => job.category).filter(Boolean)),
   ];
 
   const filteredJobs = jobs.filter((job) => {
@@ -45,18 +43,12 @@ export default function Home() {
         .includes(text);
 
     const matchesCategory =
-      category === "All" ||
-      job.category === category;
+      category === "All" || job.category === category;
 
     const matchesStatus =
-      status === "All" ||
-      getStatus(job) === status;
+      status === "All" || getStatus(job) === status;
 
-    return (
-      matchesSearch &&
-      matchesCategory &&
-      matchesStatus
-    );
+    return matchesSearch && matchesCategory && matchesStatus;
   });
 
   const openJobs = jobs.filter(
@@ -81,12 +73,12 @@ export default function Home() {
     <>
       <Head>
         <title>
-          Govt Jobs 2026 | Latest Government Jobs in India
+          Career Hub 2026 | Jobs, AI Careers, Skills & Resume
         </title>
 
         <meta
           name="description"
-          content="Latest Government Jobs 2026 in India including Banking, Railway, SSC, Defence, PSU and Healthcare jobs."
+          content="Career Hub 2026 - Latest Government Jobs, Private Jobs, AI Careers, Data Analytics, IT Jobs, Remote Jobs, Career Roadmaps, Resume and Interview Preparation."
         />
 
         <meta
@@ -106,40 +98,141 @@ export default function Home() {
 
         <nav className="top-nav">
           <Link href="/">🏠 Home</Link>
-          <a href="#categories">📂 Categories</a>
+
+          <a href="#career">🚀 Careers</a>
+
+          <a href="#categories">📂 Jobs</a>
+
           <a href="#jobs">📋 Latest Jobs</a>
+
+          <a href="#skills">🎓 Skills</a>
+
+          <a href="#resources">📚 Resources</a>
+
           <a href="#contact">📞 Contact</a>
         </nav>
 
-        {/* HEADER */}
+        {/* HERO */}
 
-        <header className="header">
+        <header className="header career-header">
+
           <div className="header-badge">
-            🇮🇳 Government Job Updates
+            🇮🇳 India's Career & Job Platform
           </div>
 
           <h1>
-            🔥 Latest Govt Jobs 2026
+            🚀 Career Hub 2026
           </h1>
 
           <p>
-            Find Government Jobs Across India
+            Find Jobs. Learn Skills. Build Your Career.
           </p>
 
           <small>
-            Banking • Railway • SSC • Defence • PSU • Healthcare
+            Govt Jobs • Private Jobs • AI Careers • IT • Data • Remote Jobs
           </small>
+
+          <div className="hero-buttons">
+            <a href="#jobs" className="hero-primary">
+              🔎 Find Jobs
+            </a>
+
+            <a href="#career" className="hero-secondary">
+              🧭 Explore Careers
+            </a>
+          </div>
+
         </header>
 
         {/* NOTICE */}
 
         <div className="notice-box">
           <strong>📢 Important:</strong>
+
           <span>
-            Always check the official recruitment
-            notification before applying.
+            Always verify job eligibility, dates and application
+            details from the official recruitment notification.
           </span>
         </div>
+
+        {/* QUICK CAREER CARDS */}
+
+        <section
+          id="career"
+          className="career-section"
+        >
+
+          <div className="section-heading">
+            <span>🔥 EXPLORE</span>
+
+            <h2>
+              Choose Your Career Path
+            </h2>
+
+            <p>
+              Discover popular career options and skills for 2026.
+            </p>
+          </div>
+
+          <div className="career-grid">
+
+            <Link href="/ai-careers" className="career-card">
+              <div className="career-icon">🤖</div>
+              <h3>AI Careers</h3>
+              <p>
+                Generative AI, AI tools, automation and AI jobs.
+              </p>
+              <strong>Explore →</strong>
+            </Link>
+
+            <Link href="/data-analytics" className="career-card">
+              <div className="career-icon">📊</div>
+              <h3>Data Analytics</h3>
+              <p>
+                Excel, SQL, Power BI, Python and analytics careers.
+              </p>
+              <strong>Explore →</strong>
+            </Link>
+
+            <Link href="/software-jobs" className="career-card">
+              <div className="career-icon">💻</div>
+              <h3>IT & Software</h3>
+              <p>
+                Software development, web development and testing.
+              </p>
+              <strong>Explore →</strong>
+            </Link>
+
+            <Link href="/cybersecurity" className="career-card">
+              <div className="career-icon">🔐</div>
+              <h3>Cybersecurity</h3>
+              <p>
+                Cybersecurity, SOC, security and ethical hacking.
+              </p>
+              <strong>Explore →</strong>
+            </Link>
+
+            <Link href="/cloud-devops" className="career-card">
+              <div className="career-icon">☁️</div>
+              <h3>Cloud & DevOps</h3>
+              <p>
+                AWS, Azure, DevOps, Docker and cloud careers.
+              </p>
+              <strong>Explore →</strong>
+            </Link>
+
+            <Link href="/remote-jobs" className="career-card">
+              <div className="career-icon">🏠</div>
+              <h3>Remote Jobs</h3>
+              <p>
+                Work-from-home and remote opportunities.
+              </p>
+              <strong>Explore →</strong>
+            </Link>
+
+          </div>
+
+        </section>
 
         {/* STATS */}
 
@@ -171,13 +264,17 @@ export default function Home() {
 
         <section className="filters-section">
 
+          <div className="search-title">
+            🔎 Search Jobs
+          </div>
+
           <input
             type="text"
             value={search}
             onChange={(e) =>
               setSearch(e.target.value)
             }
-            placeholder="🔎 Search jobs, organization, qualification..."
+            placeholder="Search jobs, organization, qualification..."
           />
 
           <div className="filter-grid">
@@ -236,18 +333,23 @@ export default function Home() {
             </button>
 
           </div>
+
         </section>
 
-        {/* CATEGORIES */}
+        {/* JOB CATEGORIES */}
 
         <section
           className="category-links"
           id="categories"
         >
 
-          <h2>
-            Explore Government Jobs by Category
-          </h2>
+          <div className="section-heading">
+            <span>🇮🇳 GOVERNMENT JOBS</span>
+
+            <h2>
+              Explore Government Jobs
+            </h2>
+          </div>
 
           <div className="category-grid">
 
@@ -256,7 +358,7 @@ export default function Home() {
             </Link>
 
             <Link href="/central-government">
-              🏛️ Central Government Jobs 2026
+              🏛️ Central Government
             </Link>
 
             <Link href="/railway">
@@ -280,29 +382,40 @@ export default function Home() {
             </Link>
 
           </div>
+
         </section>
 
-        {/* JOBS */}
+        {/* LATEST JOBS */}
 
         <section id="jobs">
 
           <div className="results-header">
+
             <div>
+              <span className="section-label">
+                📢 JOB ALERTS
+              </span>
+
               <h2>
                 Latest Government Job Notifications
               </h2>
 
               <p>
                 Showing{" "}
-                <b>{filteredJobs.length}</b> jobs
+                <b>{filteredJobs.length}</b>{" "}
+                jobs
               </p>
             </div>
+
           </div>
 
           {filteredJobs.length === 0 ? (
 
             <div className="no-jobs">
-              <h2>🔎 No Jobs Found</h2>
+
+              <h2>
+                🔎 No Jobs Found
+              </h2>
 
               <p>
                 Try another search or filter.
@@ -315,6 +428,7 @@ export default function Home() {
               >
                 Show All Jobs
               </button>
+
             </div>
 
           ) : (
@@ -333,8 +447,6 @@ export default function Home() {
                       `${job.title}-${index}`
                     }
                   >
-
-                    {/* BADGE */}
 
                     <div className="job-badges">
 
@@ -364,7 +476,9 @@ export default function Home() {
 
                     </div>
 
-                    <h2>{job.title}</h2>
+                    <h2>
+                      {job.title}
+                    </h2>
 
                     <p>
                       🏢 <b>Organization:</b>{" "}
@@ -398,7 +512,8 @@ export default function Home() {
 
                     <p>
                       📍 <b>Location:</b>{" "}
-                      {job.location || "India"}
+                      {job.location ||
+                        "India"}
                     </p>
 
                     <p>
@@ -437,8 +552,6 @@ export default function Home() {
                       </span>
                     </p>
 
-                    {/* BUTTONS */}
-
                     <div className="job-buttons">
 
                       {job.notificationLink && (
@@ -474,7 +587,113 @@ export default function Home() {
 
         </section>
 
-        {/* ADVERTISEMENT */}
+        {/* SKILLS */}
+
+        <section
+          id="skills"
+          className="skills-section"
+        >
+
+          <div className="section-heading">
+            <span>🎓 LEARN & GROW</span>
+
+            <h2>
+              Skills That Can Boost Your Career
+            </h2>
+          </div>
+
+          <div className="skills-grid">
+
+            <div className="skill-card">
+              <span>📊</span>
+              <h3>Excel + Power BI</h3>
+              <p>
+                Learn dashboards, reports and business analytics.
+              </p>
+            </div>
+
+            <div className="skill-card">
+              <span>🐍</span>
+              <h3>Python</h3>
+              <p>
+                Programming, automation, data and AI basics.
+              </p>
+            </div>
+
+            <div className="skill-card">
+              <span>🗄️</span>
+              <h3>SQL</h3>
+              <p>
+                Build strong database and analytics skills.
+              </p>
+            </div>
+
+            <div className="skill-card">
+              <span>🤖</span>
+              <h3>Generative AI</h3>
+              <p>
+                Learn practical AI tools and workflows.
+              </p>
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* RESOURCES */}
+
+        <section
+          id="resources"
+          className="resources-section"
+        >
+
+          <div className="section-heading">
+            <span>🧰 CAREER TOOLS</span>
+
+            <h2>
+              Free Career Resources
+            </h2>
+          </div>
+
+          <div className="resource-grid">
+
+            <Link href="/resume-builder">
+              <span>📄</span>
+              <h3>Resume Builder</h3>
+              <p>
+                Create a professional resume.
+              </p>
+            </Link>
+
+            <Link href="/interview-prep">
+              <span>🎤</span>
+              <h3>Interview Preparation</h3>
+              <p>
+                Practice common interview questions.
+              </p>
+            </Link>
+
+            <Link href="/career-roadmaps">
+              <span>🧭</span>
+              <h3>Career Roadmaps</h3>
+              <p>
+                Step-by-step learning paths.
+              </p>
+            </Link>
+
+            <Link href="/courses">
+              <span>🎓</span>
+              <h3>Courses & Skills</h3>
+              <p>
+                Discover useful career skills.
+              </p>
+            </Link>
+
+          </div>
+
+        </section>
+
+        {/* AD */}
 
         <section className="ad-placeholder">
           <span>Advertisement</span>
@@ -485,23 +704,27 @@ export default function Home() {
         <section className="seo-content">
 
           <h2>
-            Latest Government Jobs 2026 in India
+            Career Hub 2026 – Jobs & Career Opportunities in India
           </h2>
 
           <p>
-            Govt Jobs 2026 helps candidates discover
-            the latest government job notifications
-            across India. Find opportunities in
-            Banking, Railway, SSC, Defence, PSU,
-            Healthcare and Central Government
-            departments.
+            Career Hub 2026 helps job seekers discover
+            government jobs, career opportunities,
+            technology careers, AI jobs, data analytics,
+            IT jobs and remote work opportunities.
           </p>
 
           <p>
-            Always verify eligibility, age limit,
-            application dates, fees and other
-            requirements from the official
-            recruitment notification before applying.
+            Candidates can also explore career roadmaps,
+            professional skills, resume preparation and
+            interview preparation resources.
+          </p>
+
+          <p>
+            For government jobs, always verify eligibility,
+            age limit, application dates, fees and other
+            requirements from the official recruitment
+            notification before applying.
           </p>
 
         </section>
@@ -513,11 +736,11 @@ export default function Home() {
           <div className="footer-brand">
 
             <h3>
-              🇮🇳 Govt Jobs 2026
+              🚀 Career Hub 2026
             </h3>
 
             <p>
-              Latest Government Job Updates in India
+              Jobs • Skills • Careers • Opportunities
             </p>
 
           </div>
@@ -539,7 +762,7 @@ export default function Home() {
           </div>
 
           <p className="copyright">
-            © 2026 Govt Jobs 2026.
+            © 2026 Career Hub 2026.
             All Rights Reserved.
           </p>
 
