@@ -728,7 +728,25 @@ export default function CareerRoadmaps() {
               >
                 Career Roadmaps
               </Link>
-
               <Link
-                href="/courses"
-                className="category-grid-item
+  href="/courses"
+  className="category-grid-item"
+>
+  🎓 Skills & Courses
+</Link>
+
+</div>
+
+<p className="copyright">
+  © 2026 Career Hub 2026. All Rights Reserved.
+</p>
+
+</div>
+</footer>
+
+</div>
+  </>
+);
+}
+
+              
