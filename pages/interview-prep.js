@@ -180,6 +180,48 @@ const preparationSteps = [
   },
 ];
 
+const fresherTips = [
+  {
+    icon: "🎯",
+    title: "Know Your Resume",
+    text: "Be ready to explain every important skill, project, certification and achievement mentioned in your resume.",
+  },
+  {
+    icon: "💬",
+    title: "Communicate Clearly",
+    text: "Speak slowly and clearly. If you do not know an answer, be honest and explain how you would learn it.",
+  },
+  {
+    icon: "📚",
+    title: "Know Your Fundamentals",
+    text: "Strong fundamentals are often more important than memorizing advanced concepts.",
+  },
+  {
+    icon: "🧑‍💻",
+    title: "Prepare Your Projects",
+    text: "Understand the problem, technology, your contribution and results of every project you mention.",
+  },
+  {
+    icon: "⏰",
+    title: "Be Punctual",
+    text: "Join online interviews early and reach the interview location with enough time.",
+  },
+  {
+    icon: "😊",
+    title: "Stay Confident",
+    text: "Freshers are not expected to know everything. Show curiosity, willingness to learn and a positive attitude.",
+  },
+];
+
+const technicalTips = [
+  "Understand the basics before advanced topics.",
+  "Practice writing SQL queries and solving coding problems.",
+  "Review important terminology related to your target role.",
+  "Be prepared to explain your projects step-by-step.",
+  "Practice answering technical questions without memorizing definitions.",
+  "Use real examples whenever possible.",
+];
+
 export default function InterviewPrep() {
   const [openCategory, setOpenCategory] = useState(null);
   const [search, setSearch] = useState("");
@@ -225,6 +267,7 @@ export default function InterviewPrep() {
             border-radius: 10px;
             font-size: 15px;
             outline: none;
+            background: #ffffff;
           }
 
           .interview-search input:focus {
@@ -244,6 +287,7 @@ export default function InterviewPrep() {
             margin-bottom: 8px;
             font-size: 14px;
             font-weight: 600;
+            color: #172033;
           }
 
           .interview-category-card {
@@ -305,6 +349,68 @@ export default function InterviewPrep() {
             color: #123f7a;
           }
 
+          .tip-list {
+            margin: 0;
+            padding-left: 20px;
+          }
+
+          .tip-list li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+          }
+
+          .final-cta {
+            text-align: center;
+            background: linear-gradient(
+              135deg,
+              #123f7a,
+              #1c5ca8
+            );
+            color: #ffffff;
+            border-radius: 18px;
+            padding: 35px 20px;
+            margin-top: 20px;
+          }
+
+          .final-cta h2 {
+            margin-top: 0;
+            color: #ffffff;
+          }
+
+          .final-cta p {
+            max-width: 700px;
+            margin: 0 auto 20px;
+            line-height: 1.7;
+          }
+
+          .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+          }
+
+          .cta-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            background: #ffffff;
+            color: #123f7a;
+          }
+
+          .cta-button:hover {
+            opacity: 0.9;
+          }
+
+          .empty-state {
+            text-align: center;
+            padding: 25px;
+            background: #ffffff;
+            border: 1px solid #e1e7ef;
+            border-radius: 12px;
+          }
+
           @media (max-width: 700px) {
             .interview-wrapper {
               padding: 25px 0 50px;
@@ -317,6 +423,15 @@ export default function InterviewPrep() {
             .interview-table {
               display: block;
               overflow-x: auto;
+              white-space: nowrap;
+            }
+
+            .cta-buttons {
+              flex-direction: column;
+            }
+
+            .cta-button {
+              width: 100%;
             }
           }
         `}</style>
@@ -379,9 +494,10 @@ export default function InterviewPrep() {
           </div>
         </header>
 
-        {/* INTRO */}
+        {/* MAIN */}
         <main className="interview-wrapper">
 
+          {/* INTRO */}
           <div className="container">
 
             <div className="section-heading">
@@ -401,22 +517,27 @@ export default function InterviewPrep() {
 
             {/* SEARCH */}
             <div className="interview-search">
+
               <input
                 type="search"
                 placeholder="🔎 Search HR questions..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                aria-label="Search HR interview questions"
               />
+
             </div>
 
           </div>
 
           {/* HR QUESTIONS */}
           <section className="career-section">
+
             <div className="container">
 
               <div className="section-heading">
                 <h2>👔 Common HR Interview Questions</h2>
+
                 <p>
                   Practice these questions before attending interviews.
                 </p>
@@ -425,6 +546,7 @@ export default function InterviewPrep() {
               <div className="career-grid">
 
                 {filteredHRQuestions.map((question, index) => (
+
                   <div
                     className="career-card"
                     key={question}
@@ -442,21 +564,24 @@ export default function InterviewPrep() {
                     </p>
 
                   </div>
+
                 ))}
 
               </div>
 
               {filteredHRQuestions.length === 0 && (
-                <div className="no-jobs">
+                <div className="empty-state">
                   No matching questions found.
                 </div>
               )}
 
             </div>
+
           </section>
 
-          {/* TECHNICAL */}
+          {/* TECHNICAL INTERVIEW */}
           <section className="career-section">
+
             <div className="container">
 
               <div className="section-heading">
@@ -499,6 +624,7 @@ export default function InterviewPrep() {
                             isOpen ? null : categoryIndex
                           )
                         }
+                        aria-expanded={isOpen}
                       >
                         {isOpen
                           ? "Hide Questions ▲"
@@ -508,31 +634,34 @@ export default function InterviewPrep() {
                       {isOpen && (
                         <div className="question-list">
 
-                          {category.questions.map(
-                            (question) => (
-                              <div
-                                className="question-item"
-                                key={question}
-                              >
-                                ❓ {question}
-                              </div>
-                            )
-                          )}
+                          {category.questions.map((question) => (
+
+                            <div
+                              className="question-item"
+                              key={question}
+                            >
+                              ❓ {question}
+                            </div>
+
+                          ))}
 
                         </div>
                       )}
 
                     </article>
                   );
+
                 })}
 
               </div>
 
             </div>
+
           </section>
 
           {/* APTITUDE */}
           <section className="career-section">
+
             <div className="container">
 
               <div className="section-heading">
@@ -547,6 +676,7 @@ export default function InterviewPrep() {
               <div className="career-grid">
 
                 {aptitudeTopics.map((category) => (
+
                   <div
                     className="career-card"
                     key={category.title}
@@ -561,103 +691,127 @@ export default function InterviewPrep() {
                     <div className="category-grid">
 
                       {category.topics.map((topic) => (
+
                         <div
                           className="category-grid-item"
                           key={topic}
                         >
                           {topic}
                         </div>
+
                       ))}
 
                     </div>
 
                   </div>
+
                 ))}
 
               </div>
 
             </div>
+
           </section>
 
           {/* STAR METHOD */}
           <section className="resources-section">
+
             <div className="container">
 
               <div className="section-heading">
+
                 <h2>⭐ STAR Method for Behavioral Questions</h2>
 
                 <p>
                   Use a structured approach when answering questions about
                   your past experiences.
                 </p>
+
               </div>
 
-              <table className="interview-table">
+              <div style={{ overflowX: "auto" }}>
 
-                <thead>
-                  <tr>
-                    <th>Part</th>
-                    <th>Meaning</th>
-                    <th>What to Explain</th>
-                  </tr>
-                </thead>
+                <table className="interview-table">
 
-                <tbody>
+                  <thead>
+                    <tr>
+                      <th>Part</th>
+                      <th>Meaning</th>
+                      <th>What to Explain</th>
+                    </tr>
+                  </thead>
 
-                  <tr>
-                    <td><strong>S — Situation</strong></td>
-                    <td>Context</td>
-                    <td>
-                      Explain what was happening.
-                    </td>
-                  </tr>
+                  <tbody>
 
-                  <tr>
-                    <td><strong>T — Task</strong></td>
-                    <td>Responsibility</td>
-                    <td>
-                      Explain what you needed to accomplish.
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <strong>S — Situation</strong>
+                      </td>
+                      <td>Context</td>
+                      <td>
+                        Explain what was happening.
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td><strong>A — Action</strong></td>
-                    <td>What you did</td>
-                    <td>
-                      Explain the specific actions you took.
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <strong>T — Task</strong>
+                      </td>
+                      <td>Responsibility</td>
+                      <td>
+                        Explain what you needed to accomplish.
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td><strong>R — Result</strong></td>
-                    <td>Outcome</td>
-                    <td>
-                      Explain what happened and what you learned.
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <strong>A — Action</strong>
+                      </td>
+                      <td>What you did</td>
+                      <td>
+                        Explain the specific actions you took.
+                      </td>
+                    </tr>
 
-                </tbody>
+                    <tr>
+                      <td>
+                        <strong>R — Result</strong>
+                      </td>
+                      <td>Outcome</td>
+                      <td>
+                        Explain what happened and what you learned.
+                      </td>
+                    </tr>
 
-              </table>
+                  </tbody>
+
+                </table>
+
+              </div>
 
             </div>
+
           </section>
 
           {/* PREPARATION ROADMAP */}
           <section className="skills-section">
+
             <div className="container">
 
               <div className="section-heading">
+
                 <h2>🗺️ Interview Preparation Roadmap</h2>
 
                 <p>
                   Follow these steps before your next interview.
                 </p>
+
               </div>
 
               <div className="career-grid">
 
                 {preparationSteps.map((step) => (
+
                   <div
                     className="skill-card"
                     key={step.title}
@@ -672,19 +826,26 @@ export default function InterviewPrep() {
                     <p>{step.text}</p>
 
                   </div>
+
                 ))}
 
               </div>
 
             </div>
+
           </section>
 
           {/* MOCK INTERVIEW */}
           <section className="career-section">
+
             <div className="container">
 
               <div className="section-heading">
                 <h2>🎤 Mock Interview Checklist</h2>
+
+                <p>
+                  Use this checklist while practicing a mock interview.
+                </p>
               </div>
 
               <div className="category-grid">
@@ -732,14 +893,236 @@ export default function InterviewPrep() {
               </div>
 
             </div>
+
           </section>
 
           {/* FRESHER TIPS */}
           <section className="career-section">
+
             <div className="container">
 
               <div className="section-heading">
+
                 <h2>🌟 Interview Tips for Freshers</h2>
+
+                <p>
+                  Simple habits that can help freshers perform better during
+                  interviews.
+                </p>
+
               </div>
 
-              <
+              <div className="career-grid">
+
+                {fresherTips.map((tip) => (
+
+                  <div
+                    className="career-card"
+                    key={tip.title}
+                  >
+
+                    <div className="career-icon">
+                      {tip.icon}
+                    </div>
+
+                    <h3>{tip.title}</h3>
+
+                    <p>{tip.text}</p>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
+          </section>
+
+          {/* TECHNICAL PREPARATION TIPS */}
+          <section className="resources-section">
+
+            <div className="container">
+
+              <div className="section-heading">
+
+                <h2>🧑‍💻 Technical Interview Tips</h2>
+
+                <p>
+                  Focus on understanding concepts and demonstrating practical
+                  problem-solving skills.
+                </p>
+
+              </div>
+
+              <div className="career-card">
+
+                <ul className="tip-list">
+
+                  {technicalTips.map((tip) => (
+
+                    <li key={tip}>
+                      {tip}
+                    </li>
+
+                  ))}
+
+                </ul>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          {/* BEFORE INTERVIEW */}
+          <section className="career-section">
+
+            <div className="container">
+
+              <div className="section-heading">
+
+                <h2>📋 One-Day-Before Interview Checklist</h2>
+
+                <p>
+                  Complete these tasks before your interview day.
+                </p>
+
+              </div>
+
+              <div className="category-grid">
+
+                <div className="category-grid-item">
+                  ✅ Review your resume
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Research the company
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Review the job description
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Revise important technical concepts
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Practice your introduction
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Prepare project explanations
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Prepare questions for the interviewer
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Check internet and microphone for online interviews
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Keep required documents ready
+                </div>
+
+                <div className="category-grid-item">
+                  ✅ Sleep properly and stay relaxed
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          {/* FINAL CTA */}
+          <section className="career-section">
+
+            <div className="container">
+
+              <div className="final-cta">
+
+                <h2>🚀 Ready for Your Interview?</h2>
+
+                <p>
+                  Build a professional resume, follow a career roadmap and
+                  practice interview questions before applying for your next
+                  opportunity.
+                </p>
+
+                <div className="cta-buttons">
+
+                  <Link
+                    href="/resume-builder"
+                    className="cta-button"
+                  >
+                    📄 Build Your Resume
+                  </Link>
+
+                  <Link
+                    href="/career-roadmaps"
+                    className="cta-button"
+                  >
+                    🗺️ Explore Roadmaps
+                  </Link>
+
+                  <Link
+                    href="/"
+                    className="cta-button"
+                  >
+                    🔎 Find Jobs
+                  </Link>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+        </main>
+
+        {/* FOOTER */}
+        <footer className="site-footer">
+
+          <div className="container">
+
+            <p>
+              © 2026 Career Hub 2026. Career information and resources for
+              job seekers.
+            </p>
+
+            <div className="footer-links">
+
+              <Link href="/">Jobs</Link>
+
+              <Link href="/career-roadmaps">
+                Career Roadmaps
+              </Link>
+
+              <Link href="/courses">
+                Courses
+              </Link>
+
+              <Link href="/resume-builder">
+                Resume Builder
+              </Link>
+
+              <Link href="/interview-prep">
+                Interview Preparation
+              </Link>
+
+            </div>
+
+          </div>
+
+        </footer>
+
+      </div>
+    </>
+  );
+}
