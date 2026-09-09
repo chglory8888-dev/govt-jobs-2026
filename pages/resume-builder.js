@@ -102,6 +102,7 @@ export default function ResumeBuilder() {
         />
 
         <meta name="robots" content="index, follow" />
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link rel="canonical" href="/resume-builder" />
@@ -416,11 +417,14 @@ export default function ResumeBuilder() {
           <div className="container">
 
             <div className="section-heading no-print">
+
               <h2>📝 Build Your Resume</h2>
+
               <p>
                 Fill in your details below. Your resume preview will update
                 when you generate it.
               </p>
+
             </div>
 
             <div className="resume-builder-grid">
@@ -431,6 +435,7 @@ export default function ResumeBuilder() {
                 <h2>Personal Information</h2>
 
                 <div className="resume-field">
+
                   <label>Full Name *</label>
 
                   <input
@@ -441,9 +446,11 @@ export default function ResumeBuilder() {
                       updateField("name", e.target.value)
                     }
                   />
+
                 </div>
 
                 <div className="resume-field">
+
                   <label>Target Job Role</label>
 
                   <input
@@ -454,9 +461,11 @@ export default function ResumeBuilder() {
                       updateField("role", e.target.value)
                     }
                   />
+
                 </div>
 
                 <div className="resume-field">
+
                   <label>Email *</label>
 
                   <input
@@ -467,9 +476,11 @@ export default function ResumeBuilder() {
                       updateField("email", e.target.value)
                     }
                   />
+
                 </div>
 
                 <div className="resume-field">
+
                   <label>Phone</label>
 
                   <input
@@ -480,9 +491,11 @@ export default function ResumeBuilder() {
                       updateField("phone", e.target.value)
                     }
                   />
+
                 </div>
 
                 <div className="resume-field">
+
                   <label>Location</label>
 
                   <input
@@ -493,9 +506,11 @@ export default function ResumeBuilder() {
                       updateField("location", e.target.value)
                     }
                   />
+
                 </div>
 
                 <div className="resume-field">
+
                   <label>LinkedIn</label>
 
                   <input
@@ -506,9 +521,11 @@ export default function ResumeBuilder() {
                       updateField("linkedin", e.target.value)
                     }
                   />
+
                 </div>
 
                 <div className="resume-field">
+
                   <label>GitHub / Portfolio</label>
 
                   <input
@@ -519,11 +536,13 @@ export default function ResumeBuilder() {
                       updateField("github", e.target.value)
                     }
                   />
+
                 </div>
 
                 <h2>Professional Summary</h2>
 
                 <div className="resume-field">
+
                   <label>Summary</label>
 
                   <textarea
@@ -533,11 +552,13 @@ export default function ResumeBuilder() {
                       updateField("summary", e.target.value)
                     }
                   />
+
                 </div>
 
                 <h2>Skills</h2>
 
                 <div className="resume-field">
+
                   <label>
                     Skills — separate each skill with a comma
                   </label>
@@ -549,11 +570,13 @@ export default function ResumeBuilder() {
                       updateField("skills", e.target.value)
                     }
                   />
+
                 </div>
 
                 <h2>Education</h2>
 
                 <div className="resume-field">
+
                   <label>Education</label>
 
                   <textarea
@@ -566,11 +589,13 @@ CGPA: 7.8`}
                       updateField("education", e.target.value)
                     }
                   />
+
                 </div>
 
                 <h2>Experience</h2>
 
                 <div className="resume-field">
+
                   <label>Experience</label>
 
                   <textarea
@@ -583,11 +608,13 @@ CGPA: 7.8`}
                       updateField("experience", e.target.value)
                     }
                   />
+
                 </div>
 
                 <h2>Projects</h2>
 
                 <div className="resume-field">
+
                   <label>Projects</label>
 
                   <textarea
@@ -600,27 +627,31 @@ CGPA: 7.8`}
                       updateField("projects", e.target.value)
                     }
                   />
+
                 </div>
 
                 <h2>Certifications</h2>
 
                 <div className="resume-field">
+
                   <label>Certifications</label>
 
                   <textarea
-                    placeholder="Python Certification
+                    placeholder={`Python Certification
 SQL Certification
-Google Project Management"
+Google Project Management`}
                     value={form.certifications}
                     onChange={(e) =>
                       updateField("certifications", e.target.value)
                     }
                   />
+
                 </div>
 
                 <h2>Achievements</h2>
 
                 <div className="resume-field">
+
                   <label>Achievements</label>
 
                   <textarea
@@ -630,6 +661,7 @@ Google Project Management"
                       updateField("achievements", e.target.value)
                     }
                   />
+
                 </div>
 
                 <div className="resume-actions">
@@ -666,6 +698,7 @@ Google Project Management"
 
                   {!showResume && (
                     <div className="resume-empty">
+
                       <div style={{ fontSize: "45px" }}>
                         📄
                       </div>
@@ -676,12 +709,14 @@ Google Project Management"
                         Fill in your details and click
                         <strong> Generate Resume</strong>.
                       </p>
+
                     </div>
                   )}
 
                 </div>
 
                 {showResume && (
+
                   <div id="resume-print-area">
 
                     <div className="resume-preview">
@@ -699,19 +734,29 @@ Google Project Management"
                       <div className="resume-contact">
 
                         {form.email && (
-                          <span>{form.email}</span>
+                          <span>
+                            {form.email}
+                          </span>
                         )}
 
                         {form.phone && (
-                          <span> • {form.phone}</span>
+                          <span>
+                            {" • "}
+                            {form.phone}
+                          </span>
                         )}
 
                         {form.location && (
-                          <span> • {form.location}</span>
+                          <span>
+                            {" • "}
+                            {form.location}
+                          </span>
                         )}
 
                         {(form.linkedin || form.github) && (
+
                           <div>
+
                             {form.linkedin && (
                               <span>
                                 LinkedIn: {form.linkedin}
@@ -724,33 +769,321 @@ Google Project Management"
                                 Portfolio/GitHub: {form.github}
                               </span>
                             )}
+
                           </div>
                         )}
 
                       </div>
 
                       {form.summary && (
-                        <section className="resume-section">
-                          <h3>Professional Summary</h3>
 
-                          <p>{form.summary}</p>
+                        <section className="resume-section">
+
+                          <h3>
+                            Professional Summary
+                          </h3>
+
+                          <p>
+                            {form.summary}
+                          </p>
+
                         </section>
                       )}
 
                       {form.skills && (
+
                         <section className="resume-section">
 
-                          <h3>Skills</h3>
+                          <h3>
+                            Skills
+                          </h3>
 
                           <div className="resume-skills">
 
-                            {splitItems(form.skills).map(
-                              (skill) => (
-                                <span
-                                  className="resume-skill"
-                                  key={skill}
-                                >
-                                  {skill}
-                                </span>
-                              )
-                
+                            {splitItems(form.skills).map((skill) => (
+                              <span
+                                className="resume-skill"
+                                key={skill}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+
+                          </div>
+
+                        </section>
+                      )}
+
+                      {form.education && (
+
+                        <section className="resume-section">
+
+                          <h3>
+                            Education
+                          </h3>
+
+                          <p>
+                            {form.education}
+                          </p>
+
+                        </section>
+                      )}
+
+                      {form.experience && (
+
+                        <section className="resume-section">
+
+                          <h3>
+                            Experience
+                          </h3>
+
+                          <p>
+                            {form.experience}
+                          </p>
+
+                        </section>
+                      )}
+
+                      {form.projects && (
+
+                        <section className="resume-section">
+
+                          <h3>
+                            Projects
+                          </h3>
+
+                          <p>
+                            {form.projects}
+                          </p>
+
+                        </section>
+                      )}
+
+                      {form.certifications && (
+
+                        <section className="resume-section">
+
+                          <h3>
+                            Certifications
+                          </h3>
+
+                          <p>
+                            {form.certifications}
+                          </p>
+
+                        </section>
+                      )}
+
+                      {form.achievements && (
+
+                        <section className="resume-section">
+
+                          <h3>
+                            Achievements
+                          </h3>
+
+                          <p>
+                            {form.achievements}
+                          </p>
+
+                        </section>
+                      )}
+
+                    </div>
+
+                    <div className="resume-actions no-print">
+
+                      <button
+                        type="button"
+                        className="resume-action-primary"
+                        onClick={printResume}
+                      >
+                        🖨️ Print / Save PDF
+                      </button>
+
+                      <button
+                        type="button"
+                        className="resume-action-secondary"
+                        onClick={() => setShowResume(false)}
+                      >
+                        ✏️ Edit Resume
+                      </button>
+
+                    </div>
+
+                  </div>
+                )}
+
+              </section>
+
+            </div>
+
+            {/* RESUME TIPS */}
+            <section className="career-section no-print">
+
+              <div className="section-heading">
+
+                <h2>
+                  💡 ATS Resume Tips
+                </h2>
+
+                <p>
+                  Follow these simple practices to make your resume easier
+                  for recruiters and applicant tracking systems to read.
+                </p>
+
+              </div>
+
+              <div className="resume-tip-grid">
+
+                <div className="resume-tip">
+
+                  <h3>
+                    🎯 Use Relevant Keywords
+                  </h3>
+
+                  <p>
+                    Match important skills and keywords from the job
+                    description with your genuine qualifications.
+                  </p>
+
+                </div>
+
+                <div className="resume-tip">
+
+                  <h3>
+                    📊 Show Achievements
+                  </h3>
+
+                  <p>
+                    Whenever possible, describe results using numbers,
+                    percentages or measurable outcomes.
+                  </p>
+
+                </div>
+
+                <div className="resume-tip">
+
+                  <h3>
+                    🧹 Keep It Clean
+                  </h3>
+
+                  <p>
+                    Use simple headings, readable formatting and avoid
+                    unnecessary graphics or complicated layouts.
+                  </p>
+
+                </div>
+
+                <div className="resume-tip">
+
+                  <h3>
+                    📝 Customize Your Resume
+                  </h3>
+
+                  <p>
+                    Adjust your professional summary and skills according
+                    to the position you are applying for.
+                  </p>
+
+                </div>
+
+                <div className="resume-tip">
+
+                  <h3>
+                    💻 Highlight Projects
+                  </h3>
+
+                  <p>
+                    Freshers can use academic, personal and practical
+                    projects to demonstrate technical skills.
+                  </p>
+
+                </div>
+
+                <div className="resume-tip">
+
+                  <h3>
+                    🔍 Proofread
+                  </h3>
+
+                  <p>
+                    Check spelling, grammar, dates, phone number, email and
+                    links before submitting your resume.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </section>
+
+            {/* FINAL CTA */}
+            <section className="career-section no-print">
+
+              <div className="notice-box">
+
+                🚀 <strong>Next Step:</strong> After creating your resume,
+                practice common HR and technical interview questions.
+
+                <div style={{ marginTop: "15px" }}>
+
+                  <a
+                    href="/interview-prep"
+                    className="hero-primary"
+                  >
+                    🎤 Practice Interviews
+                  </a>
+
+                </div>
+
+              </div>
+
+            </section>
+
+          </div>
+
+        </main>
+
+        {/* FOOTER */}
+        <footer className="site-footer no-print">
+
+          <div className="container">
+
+            <p>
+              © 2026 Career Hub 2026. Career information and career tools
+              for job seekers.
+            </p>
+
+            <div className="footer-links">
+
+              <a href="/">
+                Jobs
+              </a>
+
+              <a href="/career-roadmaps">
+                Career Roadmaps
+              </a>
+
+              <a href="/courses">
+                Courses
+              </a>
+
+              <a href="/resume-builder">
+                Resume Builder
+              </a>
+
+              <a href="/interview-prep">
+                Interview Preparation
+              </a>
+
+            </div>
+
+          </div>
+
+        </footer>
+
+      </div>
+    </>
+  );
+}
