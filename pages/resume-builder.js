@@ -801,13 +801,10 @@ Google Project Management`}
                           <div className="resume-skills">
 
                             {splitItems(form.skills).map((skill) => (
-                              <span
-                                className="resume-skill"
-                                key={skill}
-                              >
+                              <span className="resume-skill" key={skill}>
                                 {skill}
                               </span>
-                            ))}
+                             ))}
 
                           </div>
 
