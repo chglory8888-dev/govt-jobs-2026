@@ -751,7 +751,7 @@ Google Project Management`}
                             {" • "}
                             {form.location}
                           </span>
-                        )}
+                        ))}
 
                         {(form.linkedin || form.github) && (
 
