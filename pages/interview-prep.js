@@ -156,7 +156,7 @@ const preparationSteps = [
   {
     icon: "4️⃣",
     title: "Practice Explaining",
-    text: "Don't only memorize answers. Practice explaining concepts in simple language.",
+    text: "Do not only memorize answers. Practice explaining concepts in simple language.",
   },
   {
     icon: "5️⃣",
@@ -222,6 +222,32 @@ const technicalTips = [
   "Use real examples whenever possible.",
 ];
 
+const mockChecklist = [
+  "60-second introduction",
+  "Explain your strongest project",
+  "Explain your technical skills",
+  "Explain one difficult problem you solved",
+  "Explain your strengths",
+  "Explain an area you are improving",
+  "Why this company?",
+  "Why this role?",
+  "Expected questions about your resume",
+  "Questions to ask the interviewer",
+];
+
+const beforeInterviewChecklist = [
+  "Review your resume",
+  "Research the company",
+  "Review the job description",
+  "Revise important technical concepts",
+  "Practice your introduction",
+  "Prepare project explanations",
+  "Prepare questions for the interviewer",
+  "Check internet and microphone for online interviews",
+  "Keep required documents ready",
+  "Sleep properly and stay relaxed",
+];
+
 export default function InterviewPrep() {
   const [openCategory, setOpenCategory] = useState(null);
   const [search, setSearch] = useState("");
@@ -237,18 +263,25 @@ export default function InterviewPrep() {
 
         <meta
           name="description"
-          content="Prepare for job interviews with HR questions, aptitude topics, technical interview questions and career-specific interview preparation for AI, Data Analytics, Software, Cybersecurity and Cloud."
+          content="Prepare for job interviews with HR questions, aptitude topics, technical interview questions and career-specific interview preparation for AI, Data Analytics, Software, Cybersecurity, Cloud and Government Jobs."
         />
 
         <meta
           name="keywords"
-          content="interview preparation 2026, interview questions, HR interview questions, technical interview questions, aptitude preparation, data analyst interview, software developer interview"
+          content="interview preparation 2026, interview questions, HR interview questions, technical interview questions, aptitude preparation, data analyst interview, software developer interview, AI ML interview, government job interview"
         />
 
         <meta name="robots" content="index, follow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <link rel="canonical" href="/interview-prep" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+
+        <link
+          rel="canonical"
+          href="https://govt-jobs-2026-8m3h.vercel.app/interview-prep"
+        />
 
         <style>{`
           .interview-wrapper {
@@ -411,6 +444,46 @@ export default function InterviewPrep() {
             border-radius: 12px;
           }
 
+          .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .checklist-item {
+            background: #ffffff;
+            border: 1px solid #e1e7ef;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+          }
+
+          .checklist-item:hover {
+            border-color: #123f7a;
+            box-shadow: 0 4px 12px rgba(18, 63, 122, 0.06);
+          }
+
+          .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+          }
+
+          .category-grid-item {
+            background: #f7f9fc;
+            border: 1px solid #e1e7ef;
+            border-radius: 8px;
+            padding: 11px;
+            font-size: 13px;
+            font-weight: 600;
+          }
+
+          .category-grid-item:hover {
+            background: #edf3fb;
+          }
+
           @media (max-width: 700px) {
             .interview-wrapper {
               padding: 25px 0 50px;
@@ -432,6 +505,11 @@ export default function InterviewPrep() {
 
             .cta-button {
               width: 100%;
+            }
+
+            .checklist-grid,
+            .category-grid {
+              grid-template-columns: 1fr;
             }
           }
         `}</style>
@@ -510,7 +588,7 @@ export default function InterviewPrep() {
             </div>
 
             <div className="notice-box">
-              💡 <strong>Interview Tip:</strong> Don't memorize answers
+              💡 <strong>Interview Tip:</strong> Do not memorize answers
               word-for-word. Understand the concept and practice explaining
               it naturally.
             </div>
@@ -585,73 +663,81 @@ export default function InterviewPrep() {
             <div className="container">
 
               <div className="section-heading">
+
                 <h2>💻 Technical Interview Preparation</h2>
 
                 <p>
                   Select a career area and practice the questions commonly
                   associated with that field.
                 </p>
+
               </div>
 
               <div className="career-grid">
 
-                {interviewCategories.map((category, categoryIndex) => {
+                {interviewCategories.map(
+                  (category, categoryIndex) => {
 
-                  const isOpen = openCategory === categoryIndex;
+                    const isOpen =
+                      openCategory === categoryIndex;
 
-                  return (
-                    <article
-                      className="interview-category-card"
-                      key={category.title}
-                    >
-
-                      <div className="career-icon">
-                        {category.icon}
-                      </div>
-
-                      <h3>{category.title}</h3>
-
-                      <p>
-                        Practice important concepts and prepare explanations
-                        for common interview questions.
-                      </p>
-
-                      <button
-                        type="button"
-                        className="question-toggle"
-                        onClick={() =>
-                          setOpenCategory(
-                            isOpen ? null : categoryIndex
-                          )
-                        }
-                        aria-expanded={isOpen}
+                    return (
+                      <article
+                        className="interview-category-card"
+                        key={category.title}
                       >
-                        {isOpen
-                          ? "Hide Questions ▲"
-                          : "Show Questions ▼"}
-                      </button>
 
-                      {isOpen && (
-                        <div className="question-list">
-
-                          {category.questions.map((question) => (
-
-                            <div
-                              className="question-item"
-                              key={question}
-                            >
-                              ❓ {question}
-                            </div>
-
-                          ))}
-
+                        <div className="career-icon">
+                          {category.icon}
                         </div>
-                      )}
 
-                    </article>
-                  );
+                        <h3>{category.title}</h3>
 
-                })}
+                        <p>
+                          Practice important concepts and prepare
+                          explanations for common interview questions.
+                        </p>
+
+                        <button
+                          type="button"
+                          className="question-toggle"
+                          onClick={() =>
+                            setOpenCategory(
+                              isOpen
+                                ? null
+                                : categoryIndex
+                            )
+                          }
+                          aria-expanded={isOpen}
+                        >
+                          {isOpen
+                            ? "Hide Questions ▲"
+                            : "Show Questions ▼"}
+                        </button>
+
+                        {isOpen && (
+                          <div className="question-list">
+
+                            {category.questions.map(
+                              (question) => (
+
+                                <div
+                                  className="question-item"
+                                  key={question}
+                                >
+                                  ❓ {question}
+                                </div>
+
+                              )
+                            )}
+
+                          </div>
+                        )}
+
+                      </article>
+                    );
+                  }
+                )}
 
               </div>
 
@@ -665,12 +751,14 @@ export default function InterviewPrep() {
             <div className="container">
 
               <div className="section-heading">
+
                 <h2>🧠 Aptitude Preparation</h2>
 
                 <p>
                   Aptitude tests are common in many fresher recruitment
                   processes and competitive examinations.
                 </p>
+
               </div>
 
               <div className="career-grid">
@@ -720,11 +808,13 @@ export default function InterviewPrep() {
 
               <div className="section-heading">
 
-                <h2>⭐ STAR Method for Behavioral Questions</h2>
+                <h2>
+                  ⭐ STAR Method for Behavioral Questions
+                </h2>
 
                 <p>
-                  Use a structured approach when answering questions about
-                  your past experiences.
+                  Use a structured approach when answering questions
+                  about your past experiences.
                 </p>
 
               </div>
@@ -734,11 +824,13 @@ export default function InterviewPrep() {
                 <table className="interview-table">
 
                   <thead>
+
                     <tr>
                       <th>Part</th>
                       <th>Meaning</th>
                       <th>What to Explain</th>
                     </tr>
+
                   </thead>
 
                   <tbody>
@@ -747,7 +839,9 @@ export default function InterviewPrep() {
                       <td>
                         <strong>S — Situation</strong>
                       </td>
+
                       <td>Context</td>
+
                       <td>
                         Explain what was happening.
                       </td>
@@ -757,7 +851,9 @@ export default function InterviewPrep() {
                       <td>
                         <strong>T — Task</strong>
                       </td>
+
                       <td>Responsibility</td>
+
                       <td>
                         Explain what you needed to accomplish.
                       </td>
@@ -767,7 +863,9 @@ export default function InterviewPrep() {
                       <td>
                         <strong>A — Action</strong>
                       </td>
+
                       <td>What you did</td>
+
                       <td>
                         Explain the specific actions you took.
                       </td>
@@ -777,7 +875,9 @@ export default function InterviewPrep() {
                       <td>
                         <strong>R — Result</strong>
                       </td>
+
                       <td>Outcome</td>
+
                       <td>
                         Explain what happened and what you learned.
                       </td>
@@ -841,54 +941,27 @@ export default function InterviewPrep() {
             <div className="container">
 
               <div className="section-heading">
+
                 <h2>🎤 Mock Interview Checklist</h2>
 
                 <p>
                   Use this checklist while practicing a mock interview.
                 </p>
+
               </div>
 
-              <div className="category-grid">
+              <div className="checklist-grid">
 
-                <div className="category-grid-item">
-                  ✅ 60-second introduction
-                </div>
+                {mockChecklist.map((item) => (
 
-                <div className="category-grid-item">
-                  ✅ Explain your strongest project
-                </div>
+                  <div
+                    className="checklist-item"
+                    key={item}
+                  >
+                    ✅ {item}
+                  </div>
 
-                <div className="category-grid-item">
-                  ✅ Explain your technical skills
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Explain one difficult problem you solved
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Explain your strengths
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Explain an area you are improving
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Why this company?
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Why this role?
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Expected questions about your resume
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Questions to ask the interviewer
-                </div>
+                ))}
 
               </div>
 
@@ -906,8 +979,8 @@ export default function InterviewPrep() {
                 <h2>🌟 Interview Tips for Freshers</h2>
 
                 <p>
-                  Simple habits that can help freshers perform better during
-                  interviews.
+                  Simple habits that can help freshers perform better
+                  during interviews.
                 </p>
 
               </div>
@@ -949,8 +1022,8 @@ export default function InterviewPrep() {
                 <h2>🧑‍💻 Technical Interview Tips</h2>
 
                 <p>
-                  Focus on understanding concepts and demonstrating practical
-                  problem-solving skills.
+                  Focus on understanding concepts and demonstrating
+                  practical problem-solving skills.
                 </p>
 
               </div>
@@ -982,7 +1055,9 @@ export default function InterviewPrep() {
 
               <div className="section-heading">
 
-                <h2>📋 One-Day-Before Interview Checklist</h2>
+                <h2>
+                  📋 One-Day-Before Interview Checklist
+                </h2>
 
                 <p>
                   Complete these tasks before your interview day.
@@ -990,47 +1065,18 @@ export default function InterviewPrep() {
 
               </div>
 
-              <div className="category-grid">
+              <div className="checklist-grid">
 
-                <div className="category-grid-item">
-                  ✅ Review your resume
-                </div>
+                {beforeInterviewChecklist.map((item) => (
 
-                <div className="category-grid-item">
-                  ✅ Research the company
-                </div>
+                  <div
+                    className="checklist-item"
+                    key={item}
+                  >
+                    ✅ {item}
+                  </div>
 
-                <div className="category-grid-item">
-                  ✅ Review the job description
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Revise important technical concepts
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Practice your introduction
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Prepare project explanations
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Prepare questions for the interviewer
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Check internet and microphone for online interviews
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Keep required documents ready
-                </div>
-
-                <div className="category-grid-item">
-                  ✅ Sleep properly and stay relaxed
-                </div>
+                ))}
 
               </div>
 
@@ -1048,9 +1094,9 @@ export default function InterviewPrep() {
                 <h2>🚀 Ready for Your Interview?</h2>
 
                 <p>
-                  Build a professional resume, follow a career roadmap and
-                  practice interview questions before applying for your next
-                  opportunity.
+                  Build a professional resume, follow a career roadmap
+                  and practice interview questions before applying for
+                  your next opportunity.
                 </p>
 
                 <div className="cta-buttons">
@@ -1092,8 +1138,8 @@ export default function InterviewPrep() {
           <div className="container">
 
             <p>
-              © 2026 Career Hub 2026. Career information and resources for
-              job seekers.
+              © 2026 Career Hub 2026. Career information and resources
+              for job seekers.
             </p>
 
             <div className="footer-links">
@@ -1126,3 +1172,4 @@ export default function InterviewPrep() {
     </>
   );
 }
+
