@@ -1144,3 +1144,27 @@ footer {
   color: inherit;
   text-decoration: none;
 }
+/* TOP NAVIGATION - BIGGER & HIGHLIGHTED */
+
+.nav-links a {
+  font-size: 17px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #172033;
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #2563eb;
+  background: #eef4ff;
+  transform: translateY(-1px);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-links a {
+    font-size: 16px;
+    padding: 8px 10px;
+  }
+}
