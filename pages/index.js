@@ -10,11 +10,11 @@ export default function Home() {
 
   const getStatus = (job) => {
     if (job.status) {
-      const s = String(job.status).toLowerCase();
+      const value = String(job.status).toLowerCase();
 
-      if (s.includes("closed")) return "Closed";
-      if (s.includes("closing")) return "Closing Soon";
-      if (s.includes("open")) return "Open";
+      if (value.includes("closed")) return "Closed";
+      if (value.includes("closing")) return "Closing Soon";
+      if (value.includes("open")) return "Open";
     }
 
     return "Check";
@@ -22,37 +22,37 @@ export default function Home() {
 
   const categories = [
     "All",
-    ...new Set(
-      jobs.map((job) => job.category).filter(Boolean)
-    ),
+    ...new Set(jobs.map((job) => job.category).filter(Boolean)),
   ];
 
   const filteredJobs = jobs.filter((job) => {
     const text = search.toLowerCase().trim();
 
+    const searchableText = [
+      job.title,
+      job.organization,
+      job.category,
+      job.qualification,
+      job.location,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
     const matchesSearch =
-      !text ||
-      [
-        job.title,
-        job.organization,
-        job.category,
-        job.qualification,
-        job.location,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase()
-        .includes(text);
+      !text || searchableText.includes(text);
 
     const matchesCategory =
-      category === "All" ||
-      job.category === category;
+      category === "All" || job.category === category;
 
     const matchesStatus =
-      status === "All" ||
-      getStatus(job) === status;
+      status === "All" || getStatus(job) === status;
 
-    return matchesSearch && matchesCategory && matchesStatus;
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesStatus
+    );
   });
 
   const openJobs = jobs.filter(
@@ -67,7 +67,7 @@ export default function Home() {
     (job) => getStatus(job) === "Closed"
   ).length;
 
-  const reset = () => {
+  const resetFilters = () => {
     setSearch("");
     setCategory("All");
     setStatus("All");
@@ -106,35 +106,19 @@ export default function Home() {
         {/* ================= NAVIGATION ================= */}
 
         <nav className="top-nav">
+          <Link href="/">🏠 Home</Link>
 
-          <Link href="/">
-            🏠 Home
-          </Link>
+          <a href="#career">🚀 Careers</a>
 
-          <a href="#career">
-            🚀 Careers
-          </a>
+          <a href="#categories">📂 Jobs</a>
 
-          <a href="#categories">
-            📂 Jobs
-          </a>
+          <a href="#jobs">📋 Latest Jobs</a>
 
-          <a href="#jobs">
-            📋 Latest Jobs
-          </a>
+          <a href="#skills">🎓 Skills</a>
 
-          <a href="#skills">
-            🎓 Skills
-          </a>
+          <a href="#resources">📚 Resources</a>
 
-          <a href="#resources">
-            📚 Resources
-          </a>
-
-          <a href="#contact">
-            📞 Contact
-          </a>
-
+          <a href="#contact">📞 Contact</a>
         </nav>
 
         {/* ================= HERO ================= */}
@@ -142,12 +126,10 @@ export default function Home() {
         <header className="header career-header">
 
           <div className="header-badge">
-            🇮🇳 India's Career & Job Platform
+            🇮🇳 India&apos;s Career &amp; Job Platform
           </div>
 
-          <h1>
-            🚀 Career Hub 2026
-          </h1>
+          <h1>🚀 Career Hub 2026</h1>
 
           <p>
             Find Jobs. Learn Skills. Build Your Career.
@@ -181,9 +163,7 @@ export default function Home() {
 
         <div className="notice-box">
 
-          <strong>
-            📢 Important:
-          </strong>
+          <strong>📢 Important:</strong>
 
           <span>
             Always verify job eligibility, dates and application
@@ -192,7 +172,7 @@ export default function Home() {
 
         </div>
 
-        {/* ================= CAREER HUB ================= */}
+        {/* ================= CAREER PATHS ================= */}
 
         <section
           id="career"
@@ -201,13 +181,9 @@ export default function Home() {
 
           <div className="section-heading">
 
-            <span>
-              🔥 EXPLORE
-            </span>
+            <span>🔥 EXPLORE</span>
 
-            <h2>
-              Choose Your Career Path
-            </h2>
+            <h2>Choose Your Career Path</h2>
 
             <p>
               Discover popular career options and skills for 2026.
@@ -217,244 +193,164 @@ export default function Home() {
 
           <div className="career-grid">
 
-            {/* AI */}
-
             <Link
               href="/ai-careers"
               className="career-card"
             >
-              <div className="career-icon">
-                🤖
-              </div>
+              <div className="career-icon">🤖</div>
 
-              <h3>
-                AI Careers
-              </h3>
+              <h3>AI Careers</h3>
 
               <p>
                 Generative AI, Machine Learning,
                 AI tools and AI careers.
               </p>
 
-              <strong>
-                Explore →
-              </strong>
+              <strong>Explore →</strong>
             </Link>
-
-            {/* DATA */}
 
             <Link
               href="/data-analytics"
               className="career-card"
             >
-              <div className="career-icon">
-                📊
-              </div>
+              <div className="career-icon">📊</div>
 
-              <h3>
-                Data Analytics
-              </h3>
+              <h3>Data Analytics</h3>
 
               <p>
                 Excel, SQL, Power BI, Python
                 and Data Analyst careers.
               </p>
 
-              <strong>
-                Explore →
-              </strong>
+              <strong>Explore →</strong>
             </Link>
-
-            {/* SOFTWARE */}
 
             <Link
               href="/software-jobs"
               className="career-card"
             >
-              <div className="career-icon">
-                💻
-              </div>
+              <div className="career-icon">💻</div>
 
-              <h3>
-                IT & Software
-              </h3>
+              <h3>IT &amp; Software</h3>
 
               <p>
                 Software development, web development
                 and testing careers.
               </p>
 
-              <strong>
-                Explore →
-              </strong>
+              <strong>Explore →</strong>
             </Link>
-
-            {/* CYBERSECURITY */}
 
             <Link
               href="/cybersecurity"
               className="career-card"
             >
-              <div className="career-icon">
-                🔐
-              </div>
+              <div className="career-icon">🔐</div>
 
-              <h3>
-                Cybersecurity
-              </h3>
+              <h3>Cybersecurity</h3>
 
               <p>
                 SOC, cybersecurity, network security
                 and security careers.
               </p>
 
-              <strong>
-                Explore →
-              </strong>
+              <strong>Explore →</strong>
             </Link>
-
-            {/* CLOUD */}
 
             <Link
               href="/cloud-devops"
               className="career-card"
             >
-              <div className="career-icon">
-                ☁️
-              </div>
+              <div className="career-icon">☁️</div>
 
-              <h3>
-                Cloud & DevOps
-              </h3>
+              <h3>Cloud &amp; DevOps</h3>
 
               <p>
                 AWS, Azure, Docker, Kubernetes
                 and DevOps careers.
               </p>
 
-              <strong>
-                Explore →
-              </strong>
+              <strong>Explore →</strong>
             </Link>
-
-            {/* REMOTE */}
 
             <Link
               href="/remote-jobs"
               className="career-card"
             >
-              <div className="career-icon">
-                🏠
-              </div>
+              <div className="career-icon">🏠</div>
 
-              <h3>
-                Remote Jobs
-              </h3>
+              <h3>Remote Jobs</h3>
 
               <p>
                 Work From Home and remote
                 career opportunities.
               </p>
 
-              <strong>
-                Explore →
-              </strong>
+              <strong>Explore →</strong>
             </Link>
-
-            {/* ROADMAPS */}
 
             <Link
               href="/career-roadmaps"
               className="career-card"
             >
-              <div className="career-icon">
-                🗺️
-              </div>
+              <div className="career-icon">🗺️</div>
 
-              <h3>
-                Career Roadmaps
-              </h3>
+              <h3>Career Roadmaps</h3>
 
               <p>
                 Step-by-step roadmaps to
                 become job-ready.
               </p>
 
-              <strong>
-                View Roadmaps →
-              </strong>
+              <strong>View Roadmaps →</strong>
             </Link>
-
-            {/* COURSES */}
 
             <Link
               href="/courses"
               className="career-card"
             >
-              <div className="career-icon">
-                🎓
-              </div>
+              <div className="career-icon">🎓</div>
 
-              <h3>
-                Skills & Courses
-              </h3>
+              <h3>Skills &amp; Courses</h3>
 
               <p>
                 Learn important skills and
                 build practical projects.
               </p>
 
-              <strong>
-                Learn Skills →
-              </strong>
+              <strong>Learn Skills →</strong>
             </Link>
-
-            {/* RESUME */}
 
             <Link
               href="/resume-builder"
               className="career-card"
             >
-              <div className="career-icon">
-                📄
-              </div>
+              <div className="career-icon">📄</div>
 
-              <h3>
-                Resume Builder
-              </h3>
+              <h3>Resume Builder</h3>
 
               <p>
                 Create an ATS-friendly
                 professional resume.
               </p>
 
-              <strong>
-                Build Resume →
-              </strong>
+              <strong>Build Resume →</strong>
             </Link>
-
-            {/* INTERVIEW */}
 
             <Link
               href="/interview-prep"
               className="career-card"
             >
-              <div className="career-icon">
-                🎤
-              </div>
+              <div className="career-icon">🎤</div>
 
-              <h3>
-                Interview Preparation
-              </h3>
+              <h3>Interview Preparation</h3>
 
               <p>
                 Practice technical, HR and
                 aptitude interview questions.
               </p>
 
-              <strong>
-                Prepare Now →
-              </strong>
+              <strong>Prepare Now →</strong>
             </Link>
 
           </div>
@@ -498,8 +394,8 @@ export default function Home() {
           <input
             type="text"
             value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
+            onChange={(event) =>
+              setSearch(event.target.value)
             }
             placeholder="Search jobs, organization, qualification..."
           />
@@ -508,13 +404,11 @@ export default function Home() {
 
             <select
               value={category}
-              onChange={(e) =>
-                setCategory(e.target.value)
+              onChange={(event) =>
+                setCategory(event.target.value)
               }
             >
-
               {categories.map((item) => (
-
                 <option
                   key={item}
                   value={item}
@@ -523,18 +417,15 @@ export default function Home() {
                     ? "📂 All Categories"
                     : item}
                 </option>
-
               ))}
-
             </select>
 
             <select
               value={status}
-              onChange={(e) =>
-                setStatus(e.target.value)
+              onChange={(event) =>
+                setStatus(event.target.value)
               }
             >
-
               <option value="All">
                 📌 All Status
               </option>
@@ -554,13 +445,12 @@ export default function Home() {
               <option value="Check">
                 🔵 Check Notification
               </option>
-
             </select>
 
             <button
               type="button"
               className="reset-button"
-              onClick={reset}
+              onClick={resetFilters}
             >
               🔄 Reset
             </button>
@@ -569,7 +459,7 @@ export default function Home() {
 
         </section>
 
-        {/* ================= GOVERNMENT JOB CATEGORIES ================= */}
+        {/* ================= GOVERNMENT CATEGORIES ================= */}
 
         <section
           className="category-links"
@@ -578,13 +468,9 @@ export default function Home() {
 
           <div className="section-heading">
 
-            <span>
-              🇮🇳 GOVERNMENT JOBS
-            </span>
+            <span>🇮🇳 GOVERNMENT JOBS</span>
 
-            <h2>
-              Explore Government Jobs
-            </h2>
+            <h2>Explore Government Jobs</h2>
 
             <p>
               Find government job opportunities by category.
@@ -643,11 +529,7 @@ export default function Home() {
               </h2>
 
               <p>
-                Showing{" "}
-                <b>
-                  {filteredJobs.length}
-                </b>{" "}
-                jobs
+                Showing <b>{filteredJobs.length}</b> jobs
               </p>
 
             </div>
@@ -658,9 +540,7 @@ export default function Home() {
 
             <div className="no-jobs">
 
-              <h2>
-                🔎 No Jobs Found
-              </h2>
+              <h2>🔎 No Jobs Found</h2>
 
               <p>
                 Try another search or filter.
@@ -669,7 +549,7 @@ export default function Home() {
               <button
                 type="button"
                 className="apply-button"
-                onClick={reset}
+                onClick={resetFilters}
               >
                 Show All Jobs
               </button>
@@ -682,11 +562,9 @@ export default function Home() {
 
               {filteredJobs.map((job, index) => {
 
-                const jobStatus =
-                  getStatus(job);
+                const jobStatus = getStatus(job);
 
                 return (
-
                   <article
                     className="job-card"
                     key={
@@ -694,8 +572,6 @@ export default function Home() {
                       `${job.title}-${index}`
                     }
                   >
-
-                    {/* STATUS BADGES */}
 
                     <div className="job-badges">
 
@@ -731,20 +607,17 @@ export default function Home() {
 
                     <p>
                       🏢 <b>Organization:</b>{" "}
-                      {job.organization ||
-                        "Not specified"}
+                      {job.organization || "Not specified"}
                     </p>
 
                     <p>
                       📂 <b>Category:</b>{" "}
-                      {job.category ||
-                        "Government Jobs"}
+                      {job.category || "Government Jobs"}
                     </p>
 
                     <p>
                       👥 <b>Posts:</b>{" "}
-                      {job.posts ||
-                        "Not specified"}
+                      {job.posts || "Not specified"}
                     </p>
 
                     <p>
@@ -761,14 +634,12 @@ export default function Home() {
 
                     <p>
                       📍 <b>Location:</b>{" "}
-                      {job.location ||
-                        "India"}
+                      {job.location || "India"}
                     </p>
 
                     <p>
                       💼 <b>Job Type:</b>{" "}
-                      {job.jobType ||
-                        "Government"}
+                      {job.jobType || "Government"}
                     </p>
 
                     <p>
@@ -802,12 +673,9 @@ export default function Home() {
 
                     </p>
 
-                    {/* BUTTONS */}
-
                     <div className="job-buttons">
 
                       {job.notificationLink && (
-
                         <a
                           href={job.notificationLink}
                           target="_blank"
@@ -816,11 +684,9 @@ export default function Home() {
                         >
                           📄 View Notification →
                         </a>
-
                       )}
 
                       {job.applyLink && (
-
                         <a
                           href={job.applyLink}
                           target="_blank"
@@ -829,15 +695,12 @@ export default function Home() {
                         >
                           🚀 Apply Now →
                         </a>
-
                       )}
 
                     </div>
 
                   </article>
-
                 );
-
               })}
 
             </div>
@@ -855,16 +718,14 @@ export default function Home() {
 
           <div className="section-heading">
 
-            <span>
-              🎓 LEARN & GROW
-            </span>
+            <span>🎓 LEARN &amp; GROW</span>
 
             <h2>
               Skills That Can Boost Your Career
             </h2>
 
             <p>
-              Build practical skills for today's job market.
+              Build practical skills for today&apos;s job market.
             </p>
 
           </div>
@@ -872,63 +733,47 @@ export default function Home() {
           <div className="skills-grid">
 
             <div className="skill-card">
-
               <span>📊</span>
 
-              <h3>
-                Excel + Power BI
-              </h3>
+              <h3>Excel + Power BI</h3>
 
               <p>
                 Learn dashboards, reports and
                 business analytics.
               </p>
-
             </div>
 
             <div className="skill-card">
-
               <span>🐍</span>
 
-              <h3>
-                Python
-              </h3>
+              <h3>Python</h3>
 
               <p>
                 Programming, automation, data
                 and AI basics.
               </p>
-
             </div>
 
             <div className="skill-card">
-
               <span>🗄️</span>
 
-              <h3>
-                SQL
-              </h3>
+              <h3>SQL</h3>
 
               <p>
                 Build strong database and
                 analytics skills.
               </p>
-
             </div>
 
             <div className="skill-card">
-
               <span>🤖</span>
 
-              <h3>
-                Generative AI
-              </h3>
+              <h3>Generative AI</h3>
 
               <p>
                 Learn practical AI tools
                 and workflows.
               </p>
-
             </div>
 
           </div>
@@ -944,13 +789,9 @@ export default function Home() {
 
           <div className="section-heading">
 
-            <span>
-              🧰 CAREER TOOLS
-            </span>
+            <span>🧰 CAREER TOOLS</span>
 
-            <h2>
-              Free Career Resources
-            </h2>
+            <h2>Free Career Resources</h2>
 
             <p>
               Useful tools to help you become job-ready.
@@ -961,72 +802,54 @@ export default function Home() {
           <div className="resource-grid">
 
             <Link href="/resume-builder">
-
               <span>📄</span>
 
-              <h3>
-                Resume Builder
-              </h3>
+              <h3>Resume Builder</h3>
 
               <p>
                 Create a professional resume.
               </p>
-
             </Link>
 
             <Link href="/interview-prep">
-
               <span>🎤</span>
 
-              <h3>
-                Interview Preparation
-              </h3>
+              <h3>Interview Preparation</h3>
 
               <p>
                 Practice common interview questions.
               </p>
-
             </Link>
 
             <Link href="/career-roadmaps">
-
               <span>🧭</span>
 
-              <h3>
-                Career Roadmaps
-              </h3>
+              <h3>Career Roadmaps</h3>
 
               <p>
                 Step-by-step learning paths.
               </p>
-
             </Link>
 
             <Link href="/courses">
-
               <span>🎓</span>
 
-              <h3>
-                Courses & Skills
-              </h3>
+              <h3>Courses &amp; Skills</h3>
 
               <p>
                 Discover useful career skills.
               </p>
-
             </Link>
 
           </div>
 
         </section>
 
-        {/* ================= AD ================= */}
+        {/* ================= ADVERTISEMENT ================= */}
 
         <section className="ad-placeholder">
 
-          <span>
-            Advertisement
-          </span>
+          <span>Advertisement</span>
 
         </section>
 
@@ -1035,7 +858,7 @@ export default function Home() {
         <section className="seo-content">
 
           <h2>
-            Career Hub 2026 – Jobs & Career Opportunities in India
+            Career Hub 2026 – Jobs &amp; Career Opportunities in India
           </h2>
 
           <p>
@@ -1068,7 +891,10 @@ export default function Home() {
 
         {/* ================= FOOTER ================= */}
 
-        <footer id="contact">
+        <footer
+          id="contact"
+          className="site-footer"
+        >
 
           <div className="footer-brand">
 
@@ -1099,8 +925,7 @@ export default function Home() {
           </div>
 
           <p className="copyright">
-            © 2026 Career Hub 2026.
-            All Rights Reserved.
+            © 2026 Career Hub 2026. All Rights Reserved.
           </p>
 
         </footer>
