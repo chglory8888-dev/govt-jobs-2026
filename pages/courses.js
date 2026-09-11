@@ -109,7 +109,8 @@ const skillCategories = [
   {
     icon: "📗",
     title: "Excel",
-    description: "Advanced formulas, PivotTables, Power Query and reporting.",
+    description:
+      "Advanced formulas, PivotTables, Power Query and reporting.",
   },
   {
     icon: "🗄️",
@@ -119,27 +120,32 @@ const skillCategories = [
   {
     icon: "📈",
     title: "Power BI",
-    description: "Dashboards, data modeling, DAX and business intelligence.",
+    description:
+      "Dashboards, data modeling, DAX and business intelligence.",
   },
   {
     icon: "🌐",
     title: "Web Development",
-    description: "HTML, CSS, JavaScript, React and modern web applications.",
+    description:
+      "HTML, CSS, JavaScript, React and modern web applications.",
   },
   {
     icon: "🐙",
     title: "Git & GitHub",
-    description: "Version control, repositories and professional collaboration.",
+    description:
+      "Version control, repositories and professional collaboration.",
   },
   {
     icon: "🧠",
     title: "Statistics",
-    description: "Probability, distributions, hypothesis testing and analytics.",
+    description:
+      "Probability, distributions, hypothesis testing and analytics.",
   },
   {
     icon: "🤖",
     title: "Generative AI",
-    description: "AI tools, prompting, APIs and practical AI applications.",
+    description:
+      "AI tools, prompting, APIs and practical AI applications.",
   },
 ];
 
@@ -147,42 +153,50 @@ const learningSteps = [
   {
     icon: "1️⃣",
     title: "Choose One Skill",
-    text: "Pick one career direction instead of trying to learn everything together.",
+    text:
+      "Pick one career direction instead of trying to learn everything together.",
   },
   {
     icon: "2️⃣",
     title: "Learn Fundamentals",
-    text: "Understand the basic concepts before moving to advanced topics.",
+    text:
+      "Understand the basic concepts before moving to advanced topics.",
   },
   {
     icon: "3️⃣",
     title: "Practice Daily",
-    text: "Solve exercises and build small examples while learning.",
+    text:
+      "Solve exercises and build small examples while learning.",
   },
   {
     icon: "4️⃣",
     title: "Build Projects",
-    text: "Turn your knowledge into practical projects that you can showcase.",
+    text:
+      "Turn your knowledge into practical projects that you can showcase.",
   },
   {
     icon: "5️⃣",
     title: "Create Portfolio",
-    text: "Keep your best projects and achievements in a professional portfolio.",
+    text:
+      "Keep your best projects and achievements in a professional portfolio.",
   },
   {
     icon: "6️⃣",
     title: "Prepare Resume",
-    text: "Create an ATS-friendly resume focused on your target role.",
+    text:
+      "Create an ATS-friendly resume focused on your target role.",
   },
   {
     icon: "7️⃣",
     title: "Prepare Interviews",
-    text: "Practice technical, aptitude and HR questions.",
+    text:
+      "Practice technical, aptitude and HR questions.",
   },
   {
     icon: "8️⃣",
     title: "Apply for Jobs",
-    text: "Apply consistently to suitable fresher and entry-level opportunities.",
+    text:
+      "Apply consistently to suitable fresher and entry-level opportunities.",
   },
 ];
 
@@ -214,14 +228,17 @@ export default function Courses() {
         />
 
         <meta name="robots" content="index, follow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <link rel="canonical" href="/courses" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
       </Head>
 
       <div className="page">
 
         {/* NAVIGATION */}
+
         <nav className="top-nav">
           <div className="container nav-inner">
 
@@ -230,25 +247,45 @@ export default function Courses() {
             </Link>
 
             <div className="nav-links">
-              <Link href="/">Jobs</Link>
-              <Link href="/career-roadmaps">Roadmaps</Link>
-              <Link href="/courses">Courses</Link>
-              <Link href="/resume-builder">Resume</Link>
-              <Link href="/interview-prep">Interview</Link>
+
+              <Link href="/">
+                Jobs
+              </Link>
+
+              <Link href="/career-roadmaps">
+                Roadmaps
+              </Link>
+
+              <Link href="/courses">
+                Courses
+              </Link>
+
+              <Link href="/resume-builder">
+                Resume
+              </Link>
+
+              <Link href="/interview-prep">
+                Interview
+              </Link>
+
             </div>
 
           </div>
         </nav>
 
         {/* HERO */}
+
         <header className="career-header">
+
           <div className="container">
 
             <div className="header-badge">
               🎓 Skills & Learning 2026
             </div>
 
-            <h1>Skills & Courses</h1>
+            <h1>
+              Skills & Courses
+            </h1>
 
             <p>
               Learn practical skills, follow structured career paths and
@@ -274,44 +311,62 @@ export default function Courses() {
             </div>
 
           </div>
+
         </header>
 
         {/* INTRO */}
+
         <section className="career-section">
+
           <div className="container">
 
             <div className="section-heading">
-              <h2>🎯 Learn Skills That Lead to Careers</h2>
+
+              <h2>
+                🎯 Learn Skills That Lead to Careers
+              </h2>
 
               <p>
                 Choose a career direction, identify the required skills and
                 follow a structured learning plan.
               </p>
+
             </div>
 
             <div className="notice-box">
+
               💡 <strong>Important:</strong> You don't need dozens of
               certificates to start a career. Focus on useful skills,
               practical projects and demonstrating what you can do.
+
             </div>
 
           </div>
+
         </section>
 
         {/* CAREER LEARNING PATHS */}
+
         <section className="career-section">
+
           <div className="container">
 
             <div className="section-heading">
-              <h2>🚀 Career Learning Paths</h2>
+
+              <h2>
+                🚀 Career Learning Paths
+              </h2>
+
               <p>
                 Choose a path based on your interests and career goals.
               </p>
+
             </div>
 
             <div className="career-grid">
 
               {coursePaths.map((course) => (
+
                 <article
                   className="career-card"
                   key={course.title}
@@ -321,23 +376,31 @@ export default function Courses() {
                     {course.icon}
                   </div>
 
-                  <h3>{course.title}</h3>
+                  <h3>
+                    {course.title}
+                  </h3>
 
                   <p>
-                    <strong>{course.level}</strong>
+                    <strong>
+                      {course.level}
+                    </strong>
                   </p>
 
-                  <p>{course.description}</p>
+                  <p>
+                    {course.description}
+                  </p>
 
                   <div className="category-grid">
 
                     {course.skills.map((skill) => (
+
                       <div
                         className="category-grid-item"
                         key={`${course.title}-${skill}`}
                       >
                         {skill}
                       </div>
+
                     ))}
 
                   </div>
@@ -350,27 +413,37 @@ export default function Courses() {
                   </Link>
 
                 </article>
+
               ))}
 
             </div>
 
           </div>
+
         </section>
 
         {/* POPULAR SKILLS */}
+
         <section className="skills-section">
+
           <div className="container">
 
             <div className="section-heading">
-              <h2>🔥 Popular Job Skills</h2>
+
+              <h2>
+                🔥 Popular Job Skills
+              </h2>
+
               <p>
                 Skills that can be useful across multiple career paths.
               </p>
+
             </div>
 
             <div className="career-grid">
 
               {skillCategories.map((skill) => (
+
                 <div
                   className="skill-card"
                   key={skill.title}
@@ -380,32 +453,46 @@ export default function Courses() {
                     {skill.icon}
                   </div>
 
-                  <h3>{skill.title}</h3>
+                  <h3>
+                    {skill.title}
+                  </h3>
 
-                  <p>{skill.description}</p>
+                  <p>
+                    {skill.description}
+                  </p>
 
                 </div>
+
               ))}
 
             </div>
 
           </div>
+
         </section>
 
         {/* LEARNING PROCESS */}
+
         <section className="resources-section">
+
           <div className="container">
 
             <div className="section-heading">
-              <h2>🧭 How to Learn for a Job</h2>
+
+              <h2>
+                🧭 How to Learn for a Job
+              </h2>
+
               <p>
                 Follow this simple process from beginner to job applicant.
               </p>
+
             </div>
 
             <div className="career-grid">
 
               {learningSteps.map((step) => (
+
                 <div
                   className="resource-card"
                   key={step.title}
@@ -415,101 +502,155 @@ export default function Courses() {
                     {step.icon}
                   </div>
 
-                  <h3>{step.title}</h3>
+                  <h3>
+                    {step.title}
+                  </h3>
 
-                  <p>{step.text}</p>
+                  <p>
+                    {step.text}
+                  </p>
 
                 </div>
+
               ))}
 
             </div>
 
           </div>
+
         </section>
 
         {/* PROJECTS */}
+
         <section className="career-section">
+
           <div className="container">
 
             <div className="section-heading">
-              <h2>💡 Beginner Project Ideas</h2>
+
+              <h2>
+                💡 Beginner Project Ideas
+              </h2>
 
               <p>
                 Projects can help you demonstrate practical knowledge when
                 applying for jobs.
               </p>
+
             </div>
 
             <div className="category-grid">
 
               {projectIdeas.map((project) => (
+
                 <div
                   className="category-grid-item"
                   key={project}
                 >
                   {project}
                 </div>
+
               ))}
 
             </div>
 
             <div className="notice-box">
+
               🚀 <strong>Project Tip:</strong> Don't just copy a tutorial.
               Change the project, add your own features and be ready to
               explain how it works during an interview.
+
             </div>
 
           </div>
+
         </section>
 
         {/* FREE LEARNING STRATEGY */}
+
         <section className="career-section">
+
           <div className="container">
 
             <div className="section-heading">
-              <h2>📚 Smart Learning Strategy</h2>
+
+              <h2>
+                📚 Smart Learning Strategy
+              </h2>
+
             </div>
 
             <div className="career-grid">
 
               <div className="career-card">
-                <div className="career-icon">🆓</div>
-                <h3>Start With Free Resources</h3>
+
+                <div className="career-icon">
+                  🆓
+                </div>
+
+                <h3>
+                  Start With Free Resources
+                </h3>
+
                 <p>
                   Begin with documentation, tutorials, practice platforms,
                   educational videos and free learning materials.
                 </p>
+
               </div>
 
               <div className="career-card">
-                <div className="career-icon">💳</div>
-                <h3>Paid Courses</h3>
+
+                <div className="career-icon">
+                  💳
+                </div>
+
+                <h3>
+                  Paid Courses
+                </h3>
+
                 <p>
                   Consider paid courses when you need structured lessons,
                   projects, mentoring or a clear curriculum.
                 </p>
+
               </div>
 
               <div className="career-card">
-                <div className="career-icon">🏆</div>
-                <h3>Certificates</h3>
+
+                <div className="career-icon">
+                  🏆
+                </div>
+
+                <h3>
+                  Certificates
+                </h3>
+
                 <p>
                   Certificates can support your profile, but practical
                   skills and projects should remain the priority.
                 </p>
+
               </div>
 
             </div>
 
           </div>
+
         </section>
 
         {/* CAREER LINKS */}
+
         <section className="career-section">
+
           <div className="container">
 
             <div className="section-heading">
-              <h2>⚡ Continue Your Career Journey</h2>
+
+              <h2>
+                ⚡ Continue Your Career Journey
+              </h2>
+
             </div>
 
             <div className="category-grid">
@@ -587,13 +728,18 @@ export default function Courses() {
             </div>
 
           </div>
+
         </section>
 
-        {/* SEO */}
+        {/* SEO CONTENT */}
+
         <section className="seo-content">
+
           <div className="container">
 
-            <h2>Best Career Skills to Learn in 2026</h2>
+            <h2>
+              Best Career Skills to Learn in 2026
+            </h2>
 
             <p>
               Career Hub 2026 helps beginners identify practical skills for
@@ -608,7 +754,9 @@ export default function Courses() {
               practice regularly, build projects and prepare for interviews.
             </p>
 
-            <h3>Skills for freshers</h3>
+            <h3>
+              Skills for Freshers
+            </h3>
 
             <p>
               Freshers can start with skills such as Excel, SQL, Python,
@@ -616,7 +764,9 @@ export default function Courses() {
               problem-solving depending on their target career.
             </p>
 
-            <h3>From learning to employment</h3>
+            <h3>
+              From Learning to Employment
+            </h3>
 
             <p>
               Learning is only one part of the process. A strong career
@@ -626,76 +776,91 @@ export default function Courses() {
             </p>
 
           </div>
+
         </section>
 
         {/* DISCLAIMER */}
+
         <section className="career-section">
+
           <div className="container">
 
             <div className="notice-box">
+
               ⚠️ <strong>Note:</strong> Learning resources, technologies,
               course availability and employer requirements can change.
               Always verify current course details and job requirements
               before making decisions.
+
             </div>
 
           </div>
+
         </section>
 
         {/* FOOTER */}
-        <footer className="footer">
+
+        <footer className="site-footer">
+
           <div className="container">
 
-            <h3>Career Hub 2026</h3>
+            <div className="footer-brand">
 
-            <p>
-              Jobs • Skills • Courses • Roadmaps • Resume • Interviews
-            </p>
+              <h3>
+                🚀 Career Hub 2026
+              </h3>
 
-            <div className="category-grid">
+              <p>
+                Jobs • Skills • Courses • Roadmaps • Resume • Interviews
+              </p>
 
-              <Link href="/" className="category-grid-item">
+            </div>
+
+            <div className="footer-links">
+
+              <Link href="/">
                 Home
               </Link>
 
-              <Link
-                href="/career-roadmaps"
-                className="category-grid-item"
-              >
-                Roadmaps
+              <Link href="/career-roadmaps">
+                Career Roadmaps
               </Link>
 
-              <Link
-                href="/courses"
-                className="category-grid-item"
-              >
+              <Link href="/courses">
                 Courses
               </Link>
 
-              <Link
-                href="/resume-builder"
-                className="category-grid-item"
-              >
+              <Link href="/resume-builder">
                 Resume Builder
               </Link>
 
-              <Link
-                href="/interview-prep"
-                className="category-grid-item"
-              >
+              <Link href="/interview-prep">
                 Interview Prep
+              </Link>
+
+              <Link href="/privacy-policy">
+                Privacy Policy
+              </Link>
+
+              <Link href="/disclaimer">
+                Disclaimer
+              </Link>
+
+              <Link href="/terms">
+                Terms &amp; Conditions
               </Link>
 
             </div>
 
-            <p className="footer-copy">
-              © 2026 Career Hub. All rights reserved.
+            <p className="copyright">
+              © 2026 Career Hub 2026. All Rights Reserved.
             </p>
 
           </div>
+
         </footer>
 
       </div>
     </>
   );
-  }
+}
