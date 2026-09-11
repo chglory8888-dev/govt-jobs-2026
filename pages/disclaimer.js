@@ -1,68 +1,93 @@
+import Head from "next/head";
+
 export default function Disclaimer() {
   return (
-    <div className="container">
-      <div className="job-card">
-        <h1>⚠️ Disclaimer</h1>
+    <>
+      <Head>
+        <title>Disclaimer | Govt Jobs 2026</title>
 
-        <p>
-          Govt Jobs 2026 is an independent informational website.
-          We are not affiliated with, sponsored by, or officially
-          connected to any government department, recruitment board,
-          bank, railway, PSU, or other organization mentioned on this
-          website.
-        </p>
+        <meta
+          name="description"
+          content="Read the Govt Jobs 2026 disclaimer regarding government job information, external links, official sources, accuracy, and recruitment updates."
+        />
 
-        <h2>Job Information</h2>
+        <meta
+          name="robots"
+          content="index, follow"
+        />
 
-        <p>
-          We provide government job and recruitment information for
-          educational and informational purposes. Job details,
-          vacancies, eligibility, salary, dates, and other information
-          may change according to the official recruitment authority.
-        </p>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+      </Head>
 
-        <h2>Official Sources</h2>
+      <main className="container">
+        <div className="job-card">
 
-        <p>
-          Users should always verify the latest notification,
-          eligibility requirements, application dates, fees, and other
-          details on the official website of the recruiting organization
-          before applying.
-        </p>
+          <h1>⚠️ Disclaimer</h1>
 
-        <h2>External Links</h2>
+          <p>
+            Govt Jobs 2026 is an independent informational website.
+            We are not affiliated with, sponsored by, or officially
+            connected to any government department, recruitment board,
+            bank, railway, PSU, or other organization mentioned on this
+            website.
+          </p>
 
-        <p>
-          Our website may contain links to external websites,
-          including official government recruitment portals.
-          We do not control the content, availability, or policies
-          of external websites.
-        </p>
+          <h2>Job Information</h2>
 
-        <h2>No Guarantee</h2>
+          <p>
+            We provide government job and recruitment information for
+            educational and informational purposes. Job details,
+            vacancies, eligibility, salary, dates, and other information
+            may change according to the official recruitment authority.
+          </p>
 
-        <p>
-          Although we try to provide accurate and updated information,
-          we do not guarantee that all information will always be
-          complete, accurate, or up to date.
-        </p>
+          <h2>Official Sources</h2>
 
-        <p>
-          Applicants are responsible for checking the official
-          recruitment notification before submitting an application.
-        </p>
+          <p>
+            Users should always verify the latest notification,
+            eligibility requirements, application dates, fees, and other
+            details on the official website of the recruiting organization
+            before applying.
+          </p>
 
-        <h2>Contact</h2>
+          <h2>External Links</h2>
 
-        <p>
-          If you find incorrect or outdated information on our website,
-          please contact us so that we can review and update it.
-        </p>
+          <p>
+            Our website may contain links to external websites,
+            including official government recruitment portals.
+            We do not control the content, availability, or policies
+            of external websites.
+          </p>
 
-        <p>
-          Last updated: August 2026
-        </p>
-      </div>
-    </div>
+          <h2>No Guarantee</h2>
+
+          <p>
+            Although we try to provide accurate and updated information,
+            we do not guarantee that all information will always be
+            complete, accurate, or up to date.
+          </p>
+
+          <p>
+            Applicants are responsible for checking the official
+            recruitment notification before submitting an application.
+          </p>
+
+          <h2>Contact</h2>
+
+          <p>
+            If you find incorrect or outdated information on our website,
+            please contact us so that we can review and update it.
+          </p>
+
+          <p>
+            Last updated: August 2026
+          </p>
+
+        </div>
+      </main>
+    </>
   );
-            }
+}
