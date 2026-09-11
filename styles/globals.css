@@ -1099,3 +1099,48 @@ footer {
     font-size: 22px;
   }
 }
+/* BIG HIGHLIGHTED HEADINGS */
+
+.career-section h2,
+.skills-section h2,
+.resources-section h2,
+.seo-content h2 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #172033;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.career-section h2::after,
+.skills-section h2::after,
+.resources-section h2::after,
+.seo-content h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: #2563eb;
+}
+
+/* CAREER PATH CARDS */
+
+.career-card {
+  display: block;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.career-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.career-card a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
