@@ -102,8 +102,7 @@ export default function Home() {
       </Head>
 
       <main className="container">
-
-        /* ================= TOP NAVIGATION ================= */
+          {/* ================= TOP NAVIGATION ================= */}
 
 .top-nav {
   display: flex;
@@ -165,7 +164,8 @@ export default function Home() {
     padding: 9px 11px;
   }
 }
-        {/* ================= HERO ================= */}
+
+               {/* ================= HERO ================= */}
 
         <header className="header career-header">
 
