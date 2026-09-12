@@ -102,68 +102,24 @@ export default function Home() {
       </Head>
 
       <main className="container">
-          {/* ================= TOP NAVIGATION ================= */}
+            {/* ================= NAVIGATION ================= */}
 
-.top-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 10px;
-  margin-bottom: 20px;
-}
+<nav className="top-nav">
+  <Link href="/">🏠 Home</Link>
 
-.top-nav a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  <a href="#career">🚀 Careers</a>
 
-  font-size: 18px;
-  font-weight: 800;
-  color: #172033;
+  <a href="#categories">📂 Jobs</a>
 
-  padding: 11px 16px;
-  border-radius: 10px;
+  <a href="#jobs">📋 Latest Jobs</a>
 
-  text-decoration: none;
+  <a href="#skills">🎓 Skills</a>
 
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
+  <a href="#resources">📚 Resources</a>
 
-/* Hover Highlight */
-
-.top-nav a:hover {
-  color: #2563eb;
-  background: #eef4ff;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.15);
-}
-
-/* Home Highlight */
-
-.top-nav a:first-child {
-  background: #f1f5ff;
-  color: #123f7a;
-}
-
-/* Mobile */
-
-@media (max-width: 768px) {
-  .top-nav {
-    gap: 6px;
-    padding: 10px 5px;
-  }
-
-  .top-nav a {
-    font-size: 16px;
-    padding: 9px 11px;
-  }
-}
+  <a href="#contact">📞 Contact</a>
+</nav>
+          
 
                {/* ================= HERO ================= */}
 
